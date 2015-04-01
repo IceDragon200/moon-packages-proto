@@ -1,9 +1,0 @@
-# Mixins
-require 'twod/movable2'
-require 'twod/movable3'
-# Objects
-require 'twod/camera_base'
-require 'twod/camera2'
-require 'twod/camera3'
-require 'twod/cursor2'
-require 'twod/cursor3'

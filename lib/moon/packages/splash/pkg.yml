@@ -1,0 +1,9 @@
+---
+name: Splash!
+author: IceDragon200 (Corey Powell) (mistdragon100@gmail.com)
+description: Various splash screens for moon
+require: _basalt.rb
+deps:
+  - std
+  - es
+  - scheduler

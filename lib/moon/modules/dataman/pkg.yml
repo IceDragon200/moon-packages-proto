@@ -1,7 +1,0 @@
----
-name: Data Manager
-author: IceDragon200 (Corey Powell) (mistdragon100@gmail.com)
-description: Utility module for managing game data.
-require: _basalt.rb
-deps:
-  - std

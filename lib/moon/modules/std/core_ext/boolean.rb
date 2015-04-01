@@ -1,3 +1,0 @@
-module Boolean
-  #
-end

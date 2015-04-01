@@ -1,9 +1,0 @@
----
-name: Debug
-author: IceDragon200 (Corey Powell) (mistdragon100@gmail.com)
-description: Debug utility library.
-require: _basalt.rb
-deps:
-  - std
-  - data_model
-  - render_primitives

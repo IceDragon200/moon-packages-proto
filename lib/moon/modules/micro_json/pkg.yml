@@ -1,7 +1,0 @@
----
-name: MicroJSON
-author: IceDragon200 (Corey Powell) (mistdragon100@gmail.com)
-description: Minimalistic JSON parser for moon
-require: _basalt.rb
-deps:
-  - std

@@ -1,7 +1,0 @@
----
-name: Path Finding
-author: IceDragon200 (Corey Powell) (mistdragon100@gmail.com)
-description: Various path finding modules
-require: _basalt.rb
-deps:
-  - std

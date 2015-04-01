@@ -1,0 +1,1 @@
+require 'isometric/load'

@@ -1,7 +1,0 @@
----
-name: Entity System
-author: IceDragon200 (Corey Powell) (mistdragon100@gmail.com)
-description: Moon standard entity system.
-require: _basalt.rb
-deps:
-  - std

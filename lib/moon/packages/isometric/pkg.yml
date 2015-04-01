@@ -1,0 +1,7 @@
+---
+name: Isometric
+author: IceDragon200 (Corey Powell) (mistdragon100@gmail.com)
+description: Module for handling Isometric views.
+require: _basalt.rb
+deps:
+- std

@@ -1,0 +1,7 @@
+---
+name: Nano UI
+author: IceDragon200 (Corey Powell) (mistdragon100@gmail.com)
+description: "Reimplementation of OUI and Blendish, using mruby-nanovg."
+require: _basalt.rb
+deps:
+  - std

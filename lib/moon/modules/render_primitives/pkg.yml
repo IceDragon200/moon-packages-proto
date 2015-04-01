@@ -1,7 +1,0 @@
----
-name: Render Primitives
-author: IceDragon200 (Corey Powell) (mistdragon100@gmail.com)
-description: Primitive render objects
-require: _basalt.rb
-deps:
-  - std

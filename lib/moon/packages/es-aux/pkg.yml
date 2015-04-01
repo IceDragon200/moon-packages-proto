@@ -1,0 +1,9 @@
+---
+name: ES Auxillary
+author: IceDragon200 (Corey Powell) (mistdragon100@gmail.com)
+description: Various unsorted modules for use in ES.
+require: _basalt.rb
+deps:
+  - std
+  - es
+  - render_primitives

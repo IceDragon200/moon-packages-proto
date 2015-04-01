@@ -1,7 +1,0 @@
----
-name: Scheduler
-author: IceDragon200 (Corey Powell) (mistdragon100@gmail.com)
-description: Job Scheduling
-require: _basalt.rb
-deps:
-  - std
