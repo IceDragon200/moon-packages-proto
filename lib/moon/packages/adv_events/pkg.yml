@@ -1,0 +1,7 @@
+---
+name: Advance Events
+author: IceDragon200 (Corey Powell) (mistdragon100@gmail.com)
+description: Alternate implementation of the Moon event system.
+require: _basalt.rb
+deps:
+  - std

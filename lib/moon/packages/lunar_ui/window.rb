@@ -1,4 +1,4 @@
-module Lunar #:nodoc:
+module Lunar
   ##
   # Window Widget
   class Window < Widget

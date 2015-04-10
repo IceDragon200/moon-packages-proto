@@ -1,4 +1,4 @@
-module Lunar #:nodoc:
+module Lunar
   class SelectableList < Widget
     include Moon::Indexable
 
@@ -26,9 +26,9 @@ module Lunar #:nodoc:
     # @param [Integer] index
     private def treat_index(index)
       if wrap_index?
-        index % [@items.size, 1].max
+        index % (@items.size).max(1)
       elsif clamp_index?
-        [[index, @items.size - 1].min, 0].max
+        index.clamp(0, @items.size - 1)
       else
         super
       end

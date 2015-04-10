@@ -1,3 +1,5 @@
+require 'nui/render/base'
+
 module UI
   # This is a rewrite of the mruby-blendish class/module in pure mruby using
   # mruby-nanovg

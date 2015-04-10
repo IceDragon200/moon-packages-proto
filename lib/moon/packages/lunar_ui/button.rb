@@ -1,4 +1,4 @@
-module Lunar #:nodoc:
+module Lunar
   class Button < Widget
     class ButtonEvent < Moon::Event
       attr_reader :button

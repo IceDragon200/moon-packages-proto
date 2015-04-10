@@ -1,4 +1,4 @@
-module Avalanche #:nodoc:
+module Avalanche
   # Helper module for creating decks in Avalanche games.
   module DeckHelper
     # Generates a list of cards

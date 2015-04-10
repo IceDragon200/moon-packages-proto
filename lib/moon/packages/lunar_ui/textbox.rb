@@ -1,4 +1,4 @@
-module Lunar #:nodoc:
+module Lunar
   #
   class Textbox < Widget
     # @!attribute [r] text

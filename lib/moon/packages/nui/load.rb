@@ -1,6 +1,6 @@
 require 'nui/bnd_themes'
 require 'nui/om/oui'
 require 'nui/render/base'
-require 'nui/render/blendish'
+require 'nui/blendish'
 require 'nui/render/twig'
 require 'nui/render/nitrate'

@@ -1,4 +1,4 @@
-module Lunar #:nodoc:
+module Lunar
   ##
   # Object for wrapping Array like objects and achieving an Indexable effect
   # without touching the underlaying object.
@@ -29,7 +29,7 @@ module Lunar #:nodoc:
     ##
     # @see Indexable#treat_index
     private def treat_index(new_index)
-      new_index % [size, 1].max
+      new_index % size.max(1)
     end
 
     ##

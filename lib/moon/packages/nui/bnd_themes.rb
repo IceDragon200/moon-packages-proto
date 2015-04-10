@@ -1,3 +1,5 @@
+require 'nui/blendish/theme'
+
 module UI
   module BNDThemes
     class << self
@@ -6,10 +8,10 @@ module UI
       attr_accessor :twig
     end
 
-    self.default = BND::Theme.new.tap do |t|
+    self.default = UI::Blendish::Theme.new.tap do |t|
     end
 
-    self.twig = BND::Theme.new.tap do |t|
+    self.twig = UI::Blendish::Theme.new.tap do |t|
       outline_color = NVG.rgb(22, 22, 22)
       item_color = outline_color
       inner_color = NVG.rgb(66, 66, 66)
@@ -23,7 +25,7 @@ module UI
       shade_down = 0
 
       t.background_color = background_color
-      t.regular_theme = BND::WidgetTheme.new.tap do |w|
+      t.regular_theme.tap do |w|
         w.outline_color = outline_color
         w.item_color = item_color
         w.inner_color = inner_color
@@ -33,6 +35,7 @@ module UI
         w.shade_top = shade_top
         w.shade_down = shade_down
       end
+
       t.tool_theme = t.regular_theme.dup
       t.radio_theme = t.regular_theme.dup
       t.text_field_theme = t.regular_theme.dup
@@ -44,7 +47,8 @@ module UI
       t.tooltip_theme = t.regular_theme.dup
       t.menu_theme = t.regular_theme.dup
       t.menu_item_theme = t.regular_theme.dup
-      t.node_theme = BND::NodeTheme.new.tap do |w|
+
+      t.node_theme.tap do |w|
       end
     end
   end

@@ -1,4 +1,4 @@
-module Lunar #:nodoc:
+module Lunar
   ##
   # Widget base class
   class Widget < Moon::RenderContainer

@@ -1,5 +1,5 @@
-module States #:nodoc:
-  class Base #:nodoc:
+module States
+  class Base
     private def register_default_input_events
       input.on Moon::Event do |e|
         @renderer.trigger e

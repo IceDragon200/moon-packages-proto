@@ -1,4 +1,4 @@
-module Lunar #:nodoc:
+module Lunar
   class Label < Widget
     # @return [Moon::Text]
     attr_reader :text

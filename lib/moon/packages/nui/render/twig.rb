@@ -1,3 +1,5 @@
+require 'nui/render/base'
+
 module UI
   # This is a implementation of the Bitwig UI
   module Twig

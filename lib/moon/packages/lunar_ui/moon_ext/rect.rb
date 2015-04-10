@@ -1,5 +1,5 @@
-module Moon #:nodoc:
-  class Rect #:nodoc:
+module Moon
+  class Rect
     include RenderPrimitive::Rectangular
 
     ##
