@@ -32,7 +32,7 @@ module Moon
 
     def print_jobs
       table = []
-      l = Logfmt::Logger.new(module: 'scheduler')
+      l = Moon::Logfmt::Logger.new(module: 'scheduler')
       l.timestamp = false
       @jobs.each do |job|
         case job
