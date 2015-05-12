@@ -17,8 +17,8 @@ module ES
 
       def refresh_spritesheet
         if @spritesheet
-          @cell_size = Moon::Vector3.new(@spritesheet.cell_width,
-                                         @spritesheet.cell_height,
+          @cell_size = Moon::Vector3.new(@spritesheet.cell_w,
+                                         @spritesheet.cell_h,
                                          1)
         else
           @cell_size = Moon::Vector3.new(1, 1, 1)
@@ -32,12 +32,12 @@ module ES
 
       def width
         return 0 unless @spritesheet
-        @spritesheet.cell_width * @tile_rect.w
+        @spritesheet.cell_w * @tile_rect.w
       end
 
       def height
         return 0 unless @spritesheet
-        @spritesheet.cell_height * @tile_rect.h
+        @spritesheet.cell_h * @tile_rect.h
       end
 
       def render_content(x, y, z, options)

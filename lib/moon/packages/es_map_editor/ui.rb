@@ -27,8 +27,8 @@ class BorderRenderer < Moon::RenderContext
 
   def render_content(x, y, z, options)
     unless @border_rect.empty?
-      w = @border_rect.width - 32
-      h = @border_rect.height - 32
+      w = @border_rect.w - 32
+      h = @border_rect.h - 32
       @chunk_borders.render(x,     y,     z, 0)
       @chunk_borders.render(x + w, y,     z, 2)
       @chunk_borders.render(x,     y + h, z, 6)
@@ -49,12 +49,12 @@ class ChunkRenderer < Moon::RenderContext
     @size = Moon::Vector3.new(1, 1, 1)
   end
 
-  def width
-    @tilemap.width
+  def w
+    @tilemap.w
   end
 
-  def height
-    @tilemap.height
+  def h
+    @tilemap.h
   end
 
   def layer_opacity
@@ -68,11 +68,10 @@ class ChunkRenderer < Moon::RenderContext
   def refresh
     tileset = @chunk.tileset
     @texture = TextureCache.tileset(tileset.filename)
-    @tilemap.tileset = Moon::Spritesheet.new(@texture, tileset.cell_width,
-                                                       tileset.cell_height)
+    @tilemap.tileset = Moon::Spritesheet.new(@texture, tileset.cell_w,
+                                                       tileset.cell_h)
     @tilemap.data = @chunk.data
-    @tilemap.flags = @chunk.flags
-    @size = Moon::Vector3.new(tileset.cell_width, tileset.cell_height, 1)
+    @size = Moon::Vector3.new(tileset.cell_w, tileset.cell_h, 1)
   end
 
   def chunk=(chunk)
@@ -185,13 +184,13 @@ class MapRenderer < Moon::RenderArray
       add(renderer)
     end
     # clear size, so it can refresh
-    self.width = nil
-    self.height = nil
+    self.w = nil
+    self.h = nil
   end
 
   def apply_position_modifier(vec3 = 0)
     pos = super(vec3)
-    pos -= @camera.view if @camera
+    pos -= Moon::Vector3[@camera.view, 0] if @camera
     pos
   end
 end

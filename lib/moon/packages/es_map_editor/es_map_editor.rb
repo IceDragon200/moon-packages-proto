@@ -24,7 +24,7 @@ module States
     end
 
     private def create_model
-      @model = MapEditorModel.new
+      @model = MapEditorModel.new(camera: Camera3.new(view: engine.screen.rect))
       @model.tile_palette.tileset = ES::Tileset.find_by(uri: '/tilesets/common')
     end
 
@@ -33,8 +33,8 @@ module States
       @gui_view = MapEditorGuiView.new(model: @model)
       tileset = @model.tile_palette.tileset
       texture = TextureCache.tileset(tileset.filename)
-      @gui_view.tileset = Moon::Spritesheet.new(texture, tileset.cell_width,
-                                                         tileset.cell_height)
+      @gui_view.tileset = Moon::Spritesheet.new(texture, tileset.cell_w,
+                                                         tileset.cell_h)
       @renderer.add @map_view
       @gui.add @gui_view
     end

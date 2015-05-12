@@ -4,10 +4,11 @@ author: IceDragon200 (Corey Powell) (mistdragon100@gmail.com)
 description: Ingame map editor for editing ES formatted maps
 require: _basalt.rb
 deps:
-  - std
-  - data_model
-  - render_primitives
-  - es
-  - state_mvc
-  - twod
   - data_bags
+  - data_model
+  - es
+  - moon-boolean
+  - render_primitives
+  - state_mvc
+  - std
+  - twod

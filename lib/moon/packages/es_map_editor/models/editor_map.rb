@@ -27,7 +27,7 @@ module ES
 
     def to_map
       map = Map.new
-      map.set(to_h.exclude(:chunks))
+      map.update_fields(to_h.exclude(:chunks))
       map.chunks = chunks.map(&:to_chunk_head)
       map
     end
