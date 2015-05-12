@@ -92,12 +92,12 @@ end
 class ProxySprite < Moon::RenderContext
   attr_accessor :sprite
 
-  def width
-    (@sprite && @sprite.width) || 0
+  def w
+    (@sprite && @sprite.w) || 0
   end
 
-  def height
-    (@sprite && @sprite.height) || 0
+  def h
+    (@sprite && @sprite.h) || 0
   end
 
   def render_content(x, y, z, options)
@@ -205,13 +205,13 @@ class GaugeRenderer < Moon::RenderContext
     @bar_sprite = Moon::Sprite.new(@gauge_texture)
     @bar_sprite.clip_rect = Moon::Rect.new(0, ch, cw, ch)
 
-    @base_sprite.ox = @base_sprite.width / 2
-    @base_sprite.oy = @base_sprite.height
-    @bar_sprite.ox = @bar_sprite.width / 2
-    @bar_sprite.oy = @bar_sprite.height
+    @base_sprite.ox = @base_sprite.w / 2
+    @base_sprite.oy = @base_sprite.h
+    @bar_sprite.ox = @bar_sprite.w / 2
+    @bar_sprite.oy = @bar_sprite.h
 
-    self.width = @base_sprite.width
-    self.height = @base_sprite.height
+    self.w = @base_sprite.w
+    self.h = @base_sprite.h
   end
 
   def render_content(x, y, z, options)
@@ -228,7 +228,7 @@ class GaugeRenderer < Moon::RenderContext
     @rate = [[rate, 1.0].min, 0.0].max
     if @bar_sprite
       rect = @bar_sprite.clip_rect.dup
-      rect.width = @gauge_texture.width * @rate
+      rect.w = @gauge_texture.w * @rate
       @bar_sprite.clip_rect = rect
     end
   end
@@ -256,8 +256,8 @@ class EntityRenderer < Moon::RenderContext
       texture = TextureCache.tileset filename
       @sprite = Moon::Sprite.new(texture)
       @sprite.clip_rect = Moon::Rect.new(0, 0, 24, 24)
-      @sprite.ox = @sprite.width / 2
-      @sprite.oy = @sprite.height / 2
+      @sprite.ox = @sprite.w / 2
+      @sprite.oy = @sprite.h / 2
       @hp_gauge = GaugeRenderer.new
       @hp_gauge.set_texture(TextureCache.gauge('gauge_48x6_hp.png'), 48, 6)
       @mp_gauge = GaugeRenderer.new
@@ -295,9 +295,9 @@ class EntityRenderer < Moon::RenderContext
       sz = charpos.z
       @sprite.render(sx, sy, sz)
       @mp_gauge.render(charpos.x, sy, sz, options)
-      @hp_gauge.render(charpos.x, sy - @mp_gauge.height, sz, options)
+      @hp_gauge.render(charpos.x, sy - @mp_gauge.h, sz, options)
 
-      bounds = Moon::Cuboid.new(sx, sy, sz, @sprite.width, @sprite.height, 1)
+      bounds = Moon::Cuboid.new(sx, sy, sz, @sprite.w, @sprite.h, 1)
       s.bounds = bounds
       #@border_renderer.border_rect = bounds.to_rect_xy
       #@border_renderer.render(bounds.x, bounds.y, bounds.z)
