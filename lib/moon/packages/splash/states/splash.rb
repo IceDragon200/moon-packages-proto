@@ -16,7 +16,7 @@ module States
     end
 
     def finish
-      State.pop
+      state_manager.pop
     end
   end
 end
