@@ -59,7 +59,7 @@ module Moon
   end
 
   # An event triggered when a Mouse click takes place inside an Object.
-  class MouseFocusedEvent < WrappedEvent
+  class MouseFocusedEvent < WrappedStateEvent
   end
 
   # An event triggered when an Object resizes
