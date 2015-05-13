@@ -15,7 +15,7 @@ module Lunar
     #   An Object that responds to #[] and #size
     def initialize(obj)
       @obj = obj
-      init_eventable
+      initialize_eventable
       init_index
     end
 
