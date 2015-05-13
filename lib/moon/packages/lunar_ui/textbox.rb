@@ -28,7 +28,7 @@ module Lunar
       end
 
       on :resize do
-        @text.position.y = (height - @text.line_height) / 2
+        @text.position.y = (h - @text.line_height) / 2
       end
     end
   end
