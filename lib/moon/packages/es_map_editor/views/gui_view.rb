@@ -1,6 +1,5 @@
 class MapEditorGuiView < State::ViewBase
   attr_accessor :notifications
-  attr_reader :screen_rect
 
   attr_reader :tileset
 
@@ -17,15 +16,12 @@ class MapEditorGuiView < State::ViewBase
 
   def init_view
     super
-    @screen_rect = Moon::Screen.rect.contract(16)
-
     @font = FontCache.font('uni0553', 16)
     @controlmap = DataCache.controlmap('map_editor')
 
     @hud = Moon::RenderContainer.new
 
     @help_panel       = ES::UI::MapEditorHelpPanel.new(@controlmap)
-    @help_panel.position.set(@help_panel.to_rect.align('center', @screen_rect).xyz)
 
     @dashboard        = ES::UI::MapEditorDashboard.new
     @layer_view       = ES::UI::MapEditorLayerView.new
@@ -67,15 +63,16 @@ class MapEditorGuiView < State::ViewBase
   end
 
   def refresh_position
-    @dashboard.position.set @screen_rect.x, @screen_rect.y, 0
-    @tile_info.position.set @screen_rect.x, @dashboard.y2 + 16, 0
-    @tile_preview.position.set @screen_rect.x2 - @tile_preview.width, @dashboard.y2, 0
-    @tile_panel.position.set @screen_rect.x, @screen_rect.y2 - 32 * @tile_panel.visible_rows - 16, 0
+    @help_panel.position.set(@help_panel.to_rect.align('center', @view).xyz)
+    @dashboard.position.set @view.x, @view.y, 0
+    @tile_info.position.set @view.x, @dashboard.y2 + 16, 0
+    @tile_preview.position.set @view.x2 - @tile_preview.w, @dashboard.y2, 0
+    @tile_panel.position.set @view.x, @view.y2 - 32 * @tile_panel.visible_rows - 16, 0
     @layer_view.position.set @tile_preview.x, @tile_preview.y2, 0
-    @notifications.position.set @font.size, @screen_rect.y2 - @font.size*2, 0
-    @ui_posmon.position.set @screen_rect.x2 - @ui_posmon.width - 96, @screen_rect.y, 0
-    @ui_camera_posmon.position.set (@screen_rect.width - @ui_camera_posmon.width) / 2,
-                                    @screen_rect.y2 - @font.size,
+    @notifications.position.set @font.size, @view.y2 - @font.size*2, 0
+    @ui_posmon.position.set @view.x2 - @ui_posmon.w - 96, @view.y, 0
+    @ui_camera_posmon.position.set (@view.w - @ui_camera_posmon.w) / 2,
+                                    @view.y2 - @font.size,
                                     0
   end
 

@@ -1,3 +1,3 @@
-class MapCursor < Cursor3
+class MapCursor < Cursor2
   #
 end

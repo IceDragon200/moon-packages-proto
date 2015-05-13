@@ -94,7 +94,7 @@ class MapEditorGuiController < State::ControllerBase
 
   def create_chunk(bounds, data)
     chunk          = ES::EditorChunk.new(data)
-    chunk.position = bounds.xyz
+    chunk.position = Moon::Vector3.new(bounds.x, bounds.y, 0)
     chunk.data     = Moon::DataMatrix.new(bounds.w, bounds.h, 2, default: -1)
     chunk.passages = Moon::Table.new(bounds.w, bounds.h)
     chunk.flags    = Moon::DataMatrix.new(bounds.w, bounds.h, 2)
@@ -299,8 +299,8 @@ class MapEditorGuiController < State::ControllerBase
     tile_data = ES::TileData.new
     if chunk
       tile_data.chunk = chunk
-      tile_data.data_position = position.xyz
-      tile_data.chunk_data_position = position.xyz - chunk.position.xyz
+      tile_data.data_position = Moon::Vector3.new(position.x, position.y, 0)
+      tile_data.chunk_data_position = tile_data.data_position - chunk.position
       x, y, _ = *tile_data.chunk_data_position
       tile_data.tile_ids = chunk.data.sampler.pillar(x, y).to_a
       tile_data.passage = chunk.passages[*tile_data.chunk_data_position.xy]
@@ -310,9 +310,9 @@ class MapEditorGuiController < State::ControllerBase
 
   def update_cursor_position(delta)
     unless @model.keyboard_only_mode
-      @model.map_cursor.position = @model.camera.screen_to_world(Moon::Input::Mouse.position.xyz).floor
+      @model.map_cursor.position = @model.camera.screen_to_world(engine.input.mouse.position).floor
     end
-    @view.tile_info.tile_data = get_tile_data(@model.map_cursor.position.xy)
+    @view.tile_info.tile_data = get_tile_data(@model.map_cursor.position)
   end
 
   def update(delta)
@@ -321,10 +321,10 @@ class MapEditorGuiController < State::ControllerBase
     @view.tile_preview.tile_id = @view.tile_panel.tile_id
 
     if @model.selection_stage == 1
-      @model.selection_rect.xyz = @model.map_cursor.position
+      @model.selection_rect.position = @model.map_cursor.position
     elsif @model.selection_stage == 2
-      @model.selection_rect.whd = @model.map_cursor.position -
-                                  @model.selection_rect.xyz
+      @model.selection_rect.resolution = @model.map_cursor.position -
+                                        @model.selection_rect.position
     end
     super
   end

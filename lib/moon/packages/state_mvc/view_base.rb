@@ -7,11 +7,15 @@ class State
     # @return [State::ModelBase]
     attr_accessor :model
 
+    # @return [Moon::Rect]
+    attr_accessor :view
+
     ##
     # @param [Hash<Symbol, Object>] options
     private def init_from_options(options)
       super
       @model = options.fetch(:model, nil)
+      @view = options.fetch(:view)
     end
 
     ##

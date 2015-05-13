@@ -34,8 +34,9 @@ class MapEditorMapView < State::ViewBase
 
   def update_content(delta)
     show_labels = @model.flag_show_chunk_labels
-    campos = @model.camera.view.floor
-    @map_cursor.position = @model.map_cursor.position * 32 - campos
+    campos = @model.camera.view_offset.floor
+    pos = @model.map_cursor.position * 32 - campos
+    @map_cursor.position.set pos.x, pos.y, 0
     @map_renderer.show_borders = show_labels
     @map_renderer.show_labels = show_labels
     @map_renderer.show_underlay = @model.show_grid
@@ -44,7 +45,7 @@ class MapEditorMapView < State::ViewBase
   end
 
   def render_edit_mode
-    campos = @model.camera.view.floor
+    campos = @model.camera.view_offset.floor
     if @model.selection_stage > 0
       @tileselection_rect.render(*(-campos))
     end

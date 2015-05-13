@@ -30,8 +30,8 @@ module Lunar
 
     private def init_widget_events
       on :resize do
-        @background.width = width
-        @background.height = height
+        @background.w = w
+        @background.h = h
       end
     end
 

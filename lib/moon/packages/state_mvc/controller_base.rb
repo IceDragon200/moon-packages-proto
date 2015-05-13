@@ -4,6 +4,7 @@ class State
   ##
   # Base class for State Controllers
   class ControllerBase
+    attr_reader :engine
     # @!attribute [r] model
     #   @return [State::ModelBase]
     attr_reader :model
@@ -14,8 +15,8 @@ class State
     ##
     # @param [State::ModelBase] model
     # @param [State::ViewBase] view
-    def initialize(model, view)
-      @model, @view = model, view
+    def initialize(engine, model, view)
+      @engine, @model, @view = engine, model, view
       init
     end
 

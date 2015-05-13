@@ -24,13 +24,13 @@ module States
     end
 
     private def create_model
-      @model = MapEditorModel.new(camera: Camera3.new(view: engine.screen.rect))
+      @model = MapEditorModel.new(camera: Camera2.new(view: engine.screen.rect))
       @model.tile_palette.tileset = ES::Tileset.find_by(uri: '/tilesets/common')
     end
 
     private def create_view
-      @map_view = MapEditorMapView.new(model: @model)
-      @gui_view = MapEditorGuiView.new(model: @model)
+      @map_view = MapEditorMapView.new(model: @model, view: engine.screen.rect)
+      @gui_view = MapEditorGuiView.new(model: @model, view: engine.screen.rect)
       tileset = @model.tile_palette.tileset
       texture = TextureCache.tileset(tileset.filename)
       @gui_view.tileset = Moon::Spritesheet.new(texture, tileset.cell_w,
@@ -40,8 +40,8 @@ module States
     end
 
     private def create_controller
-      @map_controller = MapEditorMapController.new @model, @map_view
-      @gui_controller = MapEditorGuiController.new @model, @gui_view
+      @map_controller = MapEditorMapController.new engine, @model, @map_view
+      @gui_controller = MapEditorGuiController.new engine, @model, @gui_view
       @updatables.push @map_controller
       @updatables.push @gui_controller
       @gui_controller.set_layer(-1)
@@ -63,7 +63,7 @@ module States
     end
 
     private def create_world
-      @world = Moon::World.new
+      @world = Moon::EntitySystem::World.new
       @updatables.unshift @world
     end
 
