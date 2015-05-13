@@ -81,7 +81,7 @@ class MapEditorGuiController < State::ControllerBase
   end
 
   def new_chunk_revert
-    case @mode.selection_stage
+    case @model.selection_stage
     when 1
       @model.selection_stage = 0
       @view.dashboard.disable 2
