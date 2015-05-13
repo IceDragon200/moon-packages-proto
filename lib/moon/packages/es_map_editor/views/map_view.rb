@@ -17,6 +17,7 @@ class MapEditorMapView < State::ViewBase
 
     create_passage_layer
 
+    add(@map_renderer)
     add(@map_cursor)
   end
 
@@ -34,13 +35,13 @@ class MapEditorMapView < State::ViewBase
 
   def update_content(delta)
     show_labels = @model.flag_show_chunk_labels
-    campos = @model.camera.view_offset.floor
-    pos = @model.map_cursor.position * 32 - campos
+    campos = -@model.camera.view_offset.floor
+    pos = @model.map_cursor.position * 32 + campos
     @map_cursor.position.set pos.x, pos.y, 0
     @map_renderer.show_borders = show_labels
     @map_renderer.show_labels = show_labels
     @map_renderer.show_underlay = @model.show_grid
-    @map_renderer.position = -campos
+    @map_renderer.position.set(campos.x, campos.y, 0)
     super
   end
 

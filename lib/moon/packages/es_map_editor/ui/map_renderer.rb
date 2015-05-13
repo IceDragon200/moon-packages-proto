@@ -19,6 +19,7 @@ class MapRenderer < Moon::RenderArray
     end
   end
 
+  # @param [ES::EditorChunk] chunk
   private def add_chunk(chunk)
     renderer = chunk_renderer_class.new
     renderer.chunk = chunk

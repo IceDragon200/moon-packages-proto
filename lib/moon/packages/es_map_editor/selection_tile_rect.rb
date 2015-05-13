@@ -30,12 +30,12 @@ module ES
         refresh_spritesheet
       end
 
-      def width
+      def w
         return 0 unless @spritesheet
         @spritesheet.cell_w * @tile_rect.w
       end
 
-      def height
+      def h
         return 0 unless @spritesheet
         @spritesheet.cell_h * @tile_rect.h
       end

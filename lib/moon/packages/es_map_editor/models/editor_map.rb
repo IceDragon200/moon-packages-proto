@@ -17,12 +17,12 @@ module ES
       Moon::Rect.new(l.x, t.y, r.x - l.x, b.y - t.y)
     end
 
-    def width
-      bounds.width
+    def w
+      bounds.w
     end
 
-    def height
-      bounds.height
+    def h
+      bounds.h
     end
 
     def to_map

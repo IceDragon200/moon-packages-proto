@@ -10,16 +10,16 @@ module ES
       passages.resize(x, y) if passages
     end
 
-    def width
+    def w
       data.xsize
     end
 
-    def height
+    def h
       data.ysize
     end
 
     def bounds
-      Moon::Rect.new(position.x, position.y, width, height)
+      Moon::Rect.new(position.x, position.y, w, h)
     end
 
     def to_chunk

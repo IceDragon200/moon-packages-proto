@@ -241,7 +241,7 @@ class MapEditorInputDelegate < State::InputDelegateBase
     end
 
     input.on :press, @control_map['place_tile'] do
-      @controller.select_tile(Moon::Input::Mouse.position - Moon::Vector2.new(0, 16))
+      @controller.select_tile(engine.input.mouse.position - Moon::Vector2.new(0, 16))
     end
   end
 end

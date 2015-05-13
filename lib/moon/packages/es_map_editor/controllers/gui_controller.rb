@@ -138,7 +138,7 @@ class MapEditorGuiController < State::ControllerBase
 
   def resize_chunk(x, y)
     if chunk = chunk_at_position(@model.map_cursor.position.xy.floor)
-      chunk.resize(chunk.width + x, chunk.height + y)
+      chunk.resize(chunk.w + x, chunk.h + y)
     end
   end
 

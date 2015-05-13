@@ -40,7 +40,6 @@ class ChunkRenderer < Moon::RenderContext
 
   def update(delta)
     self.position = @chunk.position * @size
-    puts position
     super
   end
 
