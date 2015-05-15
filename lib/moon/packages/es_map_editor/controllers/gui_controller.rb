@@ -97,7 +97,6 @@ class MapEditorGuiController < State::ControllerBase
     chunk.position = Moon::Vector3.new(bounds.x, bounds.y, 0)
     chunk.data     = Moon::DataMatrix.new(bounds.w, bounds.h, 2, default: -1)
     chunk.passages = Moon::Table.new(bounds.w, bounds.h)
-    chunk.flags    = Moon::DataMatrix.new(bounds.w, bounds.h, 2)
     chunk.tileset  = ES::Tileset.find_by(uri: '/tilesets/common')
     @model.map.chunks << chunk
     @view.refresh_tilemaps
