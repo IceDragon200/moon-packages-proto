@@ -6,14 +6,14 @@ module Lunar
     attr_reader :text
 
     #
-    private def init_elements
+    private def initialize_elements
       super
       @text = Text.new
       add @text
     end
 
     #
-    private def init_events
+    private def initialize_events
       super
       on :typing do |e|
         @text.string += e.char

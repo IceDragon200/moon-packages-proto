@@ -5,7 +5,7 @@ module Lunar
 
     ##
     #
-    def init_elements
+    def initialize_elements
       super
       @text = Text.new
       add(@text)

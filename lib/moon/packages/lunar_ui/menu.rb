@@ -17,7 +17,7 @@ module Lunar
 
     attr_reader :font
 
-    def init_elements
+    def initialize_elements
       super
       @font = nil
       @texts = []

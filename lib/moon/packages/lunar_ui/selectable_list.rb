@@ -4,9 +4,9 @@ module Lunar
 
     ##
     #
-    private def init_elements
+    private def initialize_elements
       super
-      init_index
+      initialize_index
       @items = []
     end
 

@@ -12,7 +12,7 @@ class State
 
     ##
     # @param [Hash<Symbol, Object>] options
-    private def init_from_options(options)
+    private def initialize_from_options(options)
       super
       @model = options.fetch(:model, nil)
       @view = options.fetch(:view)
@@ -22,7 +22,7 @@ class State
     #
     private def init
       super
-      init_view
+      initialize_view
     end
 
     ##
@@ -33,7 +33,7 @@ class State
 
     ##
     # @abstract
-    def init_view
+    def initialize_view
       #
     end
   end

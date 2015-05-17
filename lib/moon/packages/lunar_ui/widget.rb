@@ -16,19 +16,19 @@ module Lunar
 
     ##
     #
-    private def init_elements
+    private def initialize_elements
       super
       create_background
     end
 
     ##
     #
-    private def init_events
+    private def initialize_events
       super
-      init_widget_events
+      initialize_widget_events
     end
 
-    private def init_widget_events
+    private def initialize_widget_events
       on :resize do
         @background.w = w
         @background.h = h

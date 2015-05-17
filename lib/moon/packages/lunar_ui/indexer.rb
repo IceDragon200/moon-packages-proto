@@ -16,7 +16,7 @@ module Lunar
     def initialize(obj)
       @obj = obj
       initialize_eventable
-      init_index
+      initialize_index
     end
 
     ##

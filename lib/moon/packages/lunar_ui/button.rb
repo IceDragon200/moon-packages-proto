@@ -26,18 +26,18 @@ module Lunar
 
     ##
     #
-    def init_elements
+    def initialize_elements
       super
       @text = Text.new
       add(@text)
     end
 
-    def init_widget_events
+    def initialize_widget_events
       super
-      init_button_events
+      initialize_button_events
     end
 
-    def init_button_events
+    def initialize_button_events
       on :press, :mouse_left do |e|
         trigger PressEvent.new(self) if screen_bounds.contains?(e.position)
       end
