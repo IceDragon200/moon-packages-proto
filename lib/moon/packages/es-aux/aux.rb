@@ -118,12 +118,18 @@ module Moon
     include ES::Taggable
 
     def everyone
-      [self]
+      return to_enum :everyone unless block_given?
+      yield self
     end
   end
+
   class RenderContainer
-    def everyone
-      ([self] + @elements.map(&:everyone)).flatten
+    def everyone(&block)
+      return to_enum :everyone unless block_given?
+      yield self
+      @elements.each do |e|
+        e.everyone(&block)
+      end
     end
   end
 end
@@ -169,7 +175,7 @@ class TweenScheduler
       # job times are counted down, we have to invert it for easing
       result.put from + diff * easer.call(1.0 - [[0, j.rate].max, 1.0].min)
     end
-    job.on_done = proc do
+    job.on :done do
       result.put to
     end
     job.tag 'tween'
