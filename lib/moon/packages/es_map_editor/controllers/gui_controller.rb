@@ -1,4 +1,6 @@
 class MapEditorGuiController < State::ControllerBase
+  attr_accessor :map_controller
+
   def center_on_map
     bounds = @model.map.bounds
     @model.cam_cursor.position.set(bounds.cx, bounds.cy, 0)
@@ -24,7 +26,7 @@ class MapEditorGuiController < State::ControllerBase
   end
 
   def toggle_grid
-    @model.show_grid = !@model.show_grid
+    @map_controller.toggle_grid(!@model.show_grid)
     @view.dashboard.toggle 7, @model.show_grid
   end
 
@@ -99,7 +101,7 @@ class MapEditorGuiController < State::ControllerBase
     chunk.passages = Moon::Table.new(bounds.w, bounds.h)
     chunk.tileset  = ES::Tileset.find_by(uri: '/tilesets/common')
     @model.map.chunks << chunk
-    @view.refresh_tilemaps
+    @map_controller.refresh_map
     chunk
   end
 
@@ -128,15 +130,15 @@ class MapEditorGuiController < State::ControllerBase
   end
 
   def move_chunk(x, y)
-    if chunk = chunk_at_position(@model.map_cursor.position.xy.floor)
+    if chunk = chunk_at_position(@model.map_cursor.position.floor)
       pos = [x, y, 0]
       chunk.position += pos
-      @model.map_cursor.position += pos
+      @model.map_cursor.move pos
     end
   end
 
   def resize_chunk(x, y)
-    if chunk = chunk_at_position(@model.map_cursor.position.xy.floor)
+    if chunk = chunk_at_position(@model.map_cursor.position.floor)
       chunk.resize(chunk.w + x, chunk.h + y)
     end
   end
@@ -157,10 +159,11 @@ class MapEditorGuiController < State::ControllerBase
     @model.layer = layer
     @view.layer_view.index = @model.layer
     if @model.layer < 0
-      @model.layer_opacity.map! { 1.0 }
+      @map_controller.layer_opacity = @model.layer_opacity.map { 1.0 }
     else
-      @model.layer_opacity.map! { 0.3 }
-      @model.layer_opacity[@model.layer] = 1.0
+      layer_opacity = @model.layer_opacity.map { 0.3 }
+      layer_opacity[@model.layer] = 1.0
+      @map_controller.layer_opacity = layer_opacity
     end
     if layer < 0
       @view.notifications.notify string: "Layer editing deactivated"
@@ -203,7 +206,7 @@ class MapEditorGuiController < State::ControllerBase
   end
 
   def move_cursor(xv, yv)
-    @model.map_cursor.position += [xv, yv, 0]
+    @model.map_cursor.position += [xv, yv]
   end
 
   def set_camera_velocity(x, y)
@@ -283,7 +286,7 @@ class MapEditorGuiController < State::ControllerBase
   end
 
   def edit_tile_palette
-    State.push(States::TilePaletteEditor)
+    state_manager.push(States::TilePaletteEditor)
   end
 
   def chunk_at_position(position)
@@ -308,8 +311,8 @@ class MapEditorGuiController < State::ControllerBase
   end
 
   def update_cursor_position(delta)
-    unless @model.keyboard_only_mode
-      @model.map_cursor.position = @model.camera.screen_to_world(engine.input.mouse.position).floor
+    if !@model.keyboard_only_mode && @model.map_cursor.active?
+      @model.map_cursor.moveto @model.camera.screen_to_world(engine.input.mouse.position).floor
     end
     @view.tile_info.tile_data = get_tile_data(@model.map_cursor.position)
   end
@@ -323,7 +326,7 @@ class MapEditorGuiController < State::ControllerBase
       @model.selection_rect.position = @model.map_cursor.position
     elsif @model.selection_stage == 2
       @model.selection_rect.resolution = @model.map_cursor.position -
-                                        @model.selection_rect.position
+                                         @model.selection_rect.position + [1, 1]
     end
     super
   end

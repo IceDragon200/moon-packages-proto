@@ -1,4 +1,4 @@
-# Specialized renderer for rendering EditorChunks with grid and border
+# Specialized renderer for rendering Map Editor Chunks with grid and border
 # additions
 class EditorChunkRenderer < ChunkRenderer
   attr_accessor :show_border

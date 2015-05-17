@@ -5,7 +5,7 @@ class MapRenderer < Moon::RenderArray
   # @return [ES::EditorMap]
   attr_accessor :dm_map
   # @return [Array<Float>]
-  attr_accessor :layer_opacity
+  attr_reader :layer_opacity
 
   def init
     super

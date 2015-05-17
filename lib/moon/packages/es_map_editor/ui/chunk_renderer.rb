@@ -1,4 +1,4 @@
-# Specialized renderer for rendering EditorChunks
+# Specialized renderer for rendering Map Chunks
 class ChunkRenderer < Moon::RenderContext
   attr_reader :chunk
 

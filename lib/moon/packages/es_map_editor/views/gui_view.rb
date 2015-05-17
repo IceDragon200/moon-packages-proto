@@ -14,7 +14,7 @@ class MapEditorGuiView < State::ViewBase
   attr_reader :ui_camera_posmon
   attr_reader :ui_posmon
 
-  def init_view
+  def initialize_view
     super
     @font = FontCache.font('uni0553', 16)
     @controlmap = DataCache.controlmap('map_editor')
@@ -55,11 +55,7 @@ class MapEditorGuiView < State::ViewBase
     @hud.add @notifications
     @hud.add @help_panel
 
-    add(@hud)
-  end
-
-  def start
-    super
+    add @hud
   end
 
   def refresh_position
@@ -67,7 +63,7 @@ class MapEditorGuiView < State::ViewBase
     @dashboard.position.set @view.x, @view.y, 0
     @tile_info.position.set @view.x, @dashboard.y2 + 16, 0
     @tile_preview.position.set @view.x2 - @tile_preview.w, @dashboard.y2, 0
-    @tile_panel.position.set @view.x, @view.y2 - 32 * @tile_panel.visible_rows - 16, 0
+    @tile_panel.position.set @view.x, @view.y2 - 32 * @tile_panel.visible_rows - 64, 0
     @layer_view.position.set @tile_preview.x, @tile_preview.y2, 0
     @notifications.position.set @font.size, @view.y2 - @font.size*2, 0
     @ui_posmon.position.set @view.x2 - @ui_posmon.w - 96, @view.y, 0
@@ -81,11 +77,5 @@ class MapEditorGuiView < State::ViewBase
     @tile_preview.tileset = @tileset
     @tile_info.tileset = @tileset
     @tile_panel.tileset = @tileset
-  end
-
-  def update_content(delta)
-    @hud.update(delta)
-    @dashboard.update(delta)
-    super
   end
 end

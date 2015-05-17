@@ -217,6 +217,7 @@ class MapEditorInputDelegate < State::InputDelegateBase
   end
 
   def register(input)
+    puts "Registering #{self.class} to #{input.to_s}"
     register_actor_move(input)
     register_cursor_move(input)
     register_chunk_move(input)
@@ -231,17 +232,24 @@ class MapEditorInputDelegate < State::InputDelegateBase
 
     ## tile panel
     input.on :press, @control_map['show_tile_panel'] do
-      @controller.show_tile_panel
-      @controller.hide_tile_preview
+      if @tp_on
+        @controller.hide_tile_panel
+        @controller.show_tile_preview
+        @tp_on = false
+      else
+        @controller.show_tile_panel
+        @controller.hide_tile_preview
+        @tp_on = true
+      end
     end
 
-    input.on :press, @control_map['show_tile_panel'] do
-      @controller.hide_tile_panel
-      @controller.show_tile_preview
-    end
+    #input.on :release, @control_map['show_tile_panel'] do
+    #  @controller.hide_tile_panel
+    #  @controller.show_tile_preview
+    #end
 
     input.on :press, @control_map['place_tile'] do
-      @controller.select_tile(engine.input.mouse.position - Moon::Vector2.new(0, 16))
+      @controller.select_tile(engine.input.mouse.position - Moon::Vector2.new(0, 16)) if @tp_on
     end
   end
 end

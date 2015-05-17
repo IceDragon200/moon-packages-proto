@@ -1,5 +1,4 @@
 module States
-  ##
   # Built-in Map Editor for editing ES-Moon style maps and chunks
   class EsMapEditor < States::Base
     attr_reader :model
@@ -13,6 +12,8 @@ module States
       create_world
       create_map
       create_autosave_interval
+
+      input.ppd_ev
     end
 
     def start
@@ -21,10 +22,18 @@ module States
       @gui_controller.refresh_follow
       @map_controller.start
       @gui_controller.start
+
+      @model.notify_all
+      # debug
+      scheduler.print_jobs
     end
 
     private def create_model
-      @model = MapEditorModel.new(camera: Camera2.new(view: engine.screen.rect))
+      view = engine.screen.rect
+      view = view.translate(-(view.w / 2), -(view.h / 2))
+      data = File.exist?('editor.yml') ? YAML.load_file('editor.yml') : {}
+      @model = MapEditorModel.new(data)
+      @model.camera = Camera2.new(view: view)
       @model.tile_palette.tileset = ES::Tileset.find_by(uri: '/tilesets/common')
     end
 
@@ -42,6 +51,8 @@ module States
     private def create_controller
       @map_controller = MapEditorMapController.new engine, @model, @map_view
       @gui_controller = MapEditorGuiController.new engine, @model, @gui_view
+      @gui_controller.map_controller = @map_controller
+      @map_controller.gui_controller = @gui_controller
       @updatables.push @map_controller
       @updatables.push @gui_controller
       @gui_controller.set_layer(-1)
@@ -81,7 +92,7 @@ module States
 
     private def create_autosave_interval
       @autosave_interval = scheduler.every('3m') do
-        @controller.autosave
+        @gui_controller.autosave
       end.tag('autosave')
     end
 
