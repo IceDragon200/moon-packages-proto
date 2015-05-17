@@ -109,8 +109,8 @@ module States
       end
 
       input.on :press, :f12 do
-        State.pop
-        State.push self.class
+        state_manager.pop
+        state_manager.push self.class
       end
     end
 
