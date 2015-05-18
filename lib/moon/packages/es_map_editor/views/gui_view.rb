@@ -1,3 +1,12 @@
+require 'es_map_editor/ui/dashboard'
+require 'es_map_editor/ui/help_panel'
+require 'es_map_editor/ui/layer_view'
+require 'es_map_editor/ui/tile_info'
+require 'es_map_editor/ui/tile_panel'
+require 'es_map_editor/ui/tile_preview'
+require 'es_map_editor/ui/position_monitor'
+require 'es_map_editor/ui/notifications'
+
 class MapEditorGuiView < State::ViewBase
   attr_accessor :notifications
 
