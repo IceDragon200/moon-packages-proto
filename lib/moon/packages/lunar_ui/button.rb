@@ -1,3 +1,6 @@
+require 'std/event'
+require 'lunar_ui/widget'
+
 module Lunar
   class Button < Widget
     class ButtonEvent < Moon::Event

@@ -1,3 +1,6 @@
+require 'render_primitives/indexable'
+require 'std/mixins/eventable'
+
 module Lunar
   ##
   # Object for wrapping Array like objects and achieving an Indexable effect

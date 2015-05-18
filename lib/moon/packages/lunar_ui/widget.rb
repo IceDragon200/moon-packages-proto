@@ -1,3 +1,5 @@
+require 'render_primitives/render_container'
+
 module Lunar
   ##
   # Widget base class
@@ -7,21 +9,18 @@ module Lunar
     # @return [Moon::SkinSlice9]
     attr_reader :background
 
-    ##
     #
     def init
       @focused = false
       super
     end
 
-    ##
     #
     private def initialize_elements
       super
       create_background
     end
 
-    ##
     #
     private def initialize_events
       super
@@ -35,20 +34,17 @@ module Lunar
       end
     end
 
-    ##
     #
     private def create_background
       @background = Moon::SkinSlice9.new
       add(@background)
     end
 
-    ##
     #
     def focus
       @focused = true
     end
 
-    ##
     #
     def unfocus
       @focused = false

@@ -1,3 +1,6 @@
+require 'std/event'
+require 'lunar_ui/selectable_list'
+
 module Lunar
   class MenuContainer < SelectableList
     class MenuEvent < Moon::Event

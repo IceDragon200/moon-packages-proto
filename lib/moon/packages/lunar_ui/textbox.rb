@@ -1,3 +1,5 @@
+require 'lunar_ui/widget'
+
 module Lunar
   #
   class Textbox < Widget
