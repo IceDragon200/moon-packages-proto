@@ -1,3 +1,5 @@
+require 'es_map_editor/bindings/map_editor_model_binder'
+
 module States
   # Built-in Map Editor for editing ES-Moon style maps and chunks
   class EsMapEditor < States::Base
@@ -23,16 +25,19 @@ module States
       @map_controller.start
       @gui_controller.start
 
-      @model.notify_all
       # debug
       scheduler.print_jobs
+      @model.ppd_ev
     end
 
     private def create_model
       view = engine.screen.rect
       view = view.translate(-(view.w / 2), -(view.h / 2))
       data = File.exist?('editor.yml') ? YAML.load_file('editor.yml') : {}
-      @model = MapEditorModel.new(data)
+      @model = MapEditorModelBinder.new(model: MapEditorModel.new(data))
+      @model.on :any do |e|
+        puts e.inspect
+      end
       @model.camera = Camera2.new(view: view)
       @model.tile_palette.tileset = ES::Tileset.find_by(uri: '/tilesets/common')
     end

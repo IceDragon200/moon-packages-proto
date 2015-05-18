@@ -104,16 +104,18 @@ class MapEditorInputDelegate < State::InputDelegateBase
 
   def register_tile_edit(input)
     ## copy tile
-    input.on :press, @control_map['copy_tile'] do
-      @controller.copy_tile
+    input.on :press, @control_map['sample_tile'] do
+      @controller.sample_tile
     end
 
+    held = [:press, :repeat]
+
     ## erase tile
-    input.on :press, @control_map['erase_tile'] do
+    input.on held, @control_map['erase_tile'] do
       @controller.erase_tile
     end
 
-    input.on :press, @control_map['place_tile'] do
+    input.on held, @control_map['place_tile'] do
       @controller.place_current_tile
     end
 
@@ -231,25 +233,17 @@ class MapEditorInputDelegate < State::InputDelegateBase
     end
 
     ## tile panel
-    input.on :press, @control_map['show_tile_panel'] do
-      if @tp_on
-        @controller.hide_tile_panel
-        @controller.show_tile_preview
-        @tp_on = false
-      else
-        @controller.show_tile_panel
-        @controller.hide_tile_preview
-        @tp_on = true
-      end
+    input.on :press, @control_map['toggle_tile_panel'] do
+      @controller.toggle_tile_panel
     end
 
-    #input.on :release, @control_map['show_tile_panel'] do
+    #input.on :release, @control_map['toggle_tile_panel'] do
     #  @controller.hide_tile_panel
     #  @controller.show_tile_preview
     #end
 
     input.on :press, @control_map['place_tile'] do
-      @controller.select_tile(engine.input.mouse.position - Moon::Vector2.new(0, 16)) if @tp_on
+      @controller.select_tile(engine.input.mouse.position - Moon::Vector2.new(0, 16))
     end
   end
 end

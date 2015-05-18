@@ -15,11 +15,6 @@ class MapEditorModel < State::ModelBase
   field :show_grid,              type: Boolean,               default: false
   field :tile_palette,           type: ES::EditorTilePalette, default: proc{ |t| t.model.new }
 
-  def update(delta)
-    @cam_cursor.update delta
-    @camera.update delta
-  end
-
   def save
     data = @model.export
     data.camera = nil
