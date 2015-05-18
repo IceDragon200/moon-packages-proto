@@ -15,7 +15,7 @@ class State
       #
     end
 
-    # @param [Moon::Input::Observer, Moon::Eventable] input
+    # @param [Moon::Eventable] input
     def register(input)
       #
     end

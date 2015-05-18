@@ -1,7 +1,4 @@
-##
-# :nodoc:
 class State
-  ##
   #
   class ViewBase < Moon::RenderContainer
     # @return [State::ModelBase]
@@ -10,7 +7,6 @@ class State
     # @return [Moon::Rect]
     attr_accessor :view
 
-    ##
     # @param [Hash<Symbol, Object>] options
     private def initialize_from_options(options)
       super
@@ -18,20 +14,17 @@ class State
       @view = options.fetch(:view)
     end
 
-    ##
     #
     private def init
       super
       initialize_view
     end
 
-    ##
     # @abstract
     def start
       # called by State::ControllerBase
     end
 
-    ##
     # @abstract
     def initialize_view
       #
