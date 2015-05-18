@@ -11,6 +11,7 @@ module UI
         field :text_color
         field :text_selected_color
       end
+
       field_setting type: Numeric do
         field :shade_top
         field :shade_down

@@ -1,3 +1,5 @@
+require 'data_model/metal'
+
 module UI
   module Blendish
     class BaseTheme < Moon::DataModel::Metal
