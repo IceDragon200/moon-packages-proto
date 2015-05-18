@@ -1,3 +1,5 @@
+require 'render_primitives/render_context'
+
 # Generic Renderer object for display a L shaped border
 class BorderRenderer < Moon::RenderContext
   attr_accessor :border_rect

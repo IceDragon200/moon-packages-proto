@@ -1,3 +1,5 @@
+require 'es_map_editor/ui/map_renderer'
+
 # Extended renderer for rendering EditorMaps with support for borders, labels,
 # overlays and underlays
 class EditorMapRenderer < MapRenderer

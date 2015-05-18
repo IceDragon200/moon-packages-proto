@@ -1,6 +1,8 @@
 module ES
   module UI
     class AnimatedText < Moon::Text
+      attr_reader :time
+      attr_reader :duration
       attr_accessor :target_text
 
       def arm(duration)
@@ -47,7 +49,7 @@ module ES
       end
 
       # @param [Hash] options
-      #   @option [Sftring] string
+      #   @option [String] string
       #   @option [Float] duration  in seconds
       #   @option [Font] font
       #     @optional

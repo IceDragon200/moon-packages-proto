@@ -1,3 +1,5 @@
+require 'lunar_ui/window'
+
 module ES
   module UI
     class MapEditorHelpPanel < Lunar::Window
@@ -15,9 +17,9 @@ module ES
         @text = Moon::Text.new '', FontCache.font('uni0553', 16) #16)
         @text.string = '' +
           "#{human_key(@controlmap["erase_tile"])} to erase current tile\n" +
-          "#{human_key(@controlmap["copy_tile"])} to select current tile\n" +
+          "#{human_key(@controlmap["sample_tile"])} to sample current tile\n" +
           "#{human_key(@controlmap["place_tile"])} to place tile\n" +
-          "#{human_key(@controlmap["show_tile_panel"])} opens Tile Panel\n" +
+          "#{human_key(@controlmap["toggle_tile_panel"])} opens Tile Panel\n" +
           "#{human_key(@controlmap["edit_layer_0"])} selects the base layer for editing\n" +
           "#{human_key(@controlmap["edit_layer_1"])} selects the detail layer for editing\n" +
           "#{human_key(@controlmap["deactivate_layer_edit"])} deactivates layer editing\n" +

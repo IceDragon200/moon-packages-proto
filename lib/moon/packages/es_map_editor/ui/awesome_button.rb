@@ -1,29 +1,51 @@
 module ES
   module UI
     class AwesomeButton < Moon::RenderContext
-      attr_reader :text
-
-      def initialize
+      def initialize_content
         super
-        @text = Moon::Text.new '', FontCache.font('awesome', 32)
+        @icon_text = Moon::Text.new '', FontCache.font('awesome', 24)
+        @label_text = Moon::Text.new '', FontCache.font('system', 16)
+      end
+
+      def color
+        @icon_text.color
+      end
+
+      def color=(color)
+        @icon_text.color = color
+      end
+
+      def icon
+        @icon_text.string
+      end
+
+      def icon=(icon)
+        @icon_text.string = icon
+      end
+
+      def label
+        @label_text.string
+      end
+
+      def label=(label)
+        @label_text.string = label
       end
 
       def w
-        32
+        @icon_text.font.size + 8
       end
 
       def h
-        32
+        @icon_text.font.size
       end
 
       def render_content(x, y, z, options)
-        return unless @text.string.presence
-        @text.render x + (w - @text.font.size) / 2,
-                     y + (h - @text.font.size) / 2,
-                     z
+        tx = x + (w - @icon_text.font.size) / 2
+        ty = y + (h - @icon_text.font.size) / 2
+        @icon_text.render tx, ty, z
+        @label_text.render tx, ty + h, z
         super
       end
-
     end
   end
 end

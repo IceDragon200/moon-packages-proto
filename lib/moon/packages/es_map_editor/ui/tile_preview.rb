@@ -1,8 +1,11 @@
+require 'render_primitives/render_context'
+
 module ES
   module UI
-    class TilePreview < Moon::RenderContainer
-      attr_accessor :tile_id       # Integer
-      attr_accessor :tileset       # Spritesheet
+    class TilePreview < Moon::RenderContext
+      attr_reader :tile_id       # Integer
+      # @return [Moon::Spritesheet]
+      attr_reader :tileset
 
       def initialize
         super
@@ -11,18 +14,39 @@ module ES
         texture = TextureCache.block 'e064x064.png'
         @background_ss = Moon::Spritesheet.new texture, 64, 64
 
-        @text = Moon::Text.new '', FontCache.font('uni0553', 16)
+        @text = AnimatedText.new '', FontCache.font('uni0553', 16)
 
-        @tileset = nil
-        @tile_id = -1
+        self.tile_id = -1
+        self.tileset = nil
+      end
+
+      def tileset=(tileset)
+        @tileset = tileset
+        resize(nil, nil)
+      end
+
+      def tile_id=(tile_id)
+        old = @tile_id
+        @tile_id = tile_id
+
+        if @tile_id != old
+          @old_tile_id = old
+          @text.set(string: "Tile #{@tile_id}")
+          @text.arm(0.5)
+        end
       end
 
       def w
-        @background_ss.cell_w
+        @w ||= @background_ss.cell_w
       end
 
       def h
-        @background_ss.cell_h
+        @h ||= @background_ss.cell_h
+      end
+
+      def update_content(delta)
+        @text.update delta
+        super
       end
 
       def render_content(x, y, z, options)
@@ -31,13 +55,23 @@ module ES
         if @tileset
           diff = (@background_ss.cell_size - @tileset.cell_size) / 2
 
-          if @tile_id >= 0
-            @tileset.render diff.x + x, diff.y + y, z, @tile_id
+          if @text.done?
+            if @tile_id >= 0
+              @tileset.render diff.x + x, diff.y + y, z, @tile_id
+            end
+          else
+            r = @text.time / @text.duration
+            if @tile_id >= 0
+              @tileset.render diff.x + x, diff.y + y, z, @tile_id, opacity: r
+            end
+            if @old_tile_id >= 0
+              @tileset.render diff.x + x, diff.y + y, z, @old_tile_id, opacity: 1-r
+            end
           end
 
-          @text.string = @tile_id.to_s
-          @text.render diff.x + x,
-                       diff.y + y + @tileset.cell_h,
+          dx = (@background_ss.cell_w - @text.w) / 2
+          @text.render dx + x,
+                       diff.y + y + @tileset.cell_h - 4,
                        z
         else
           @micro_ss.render x, y, z, 8

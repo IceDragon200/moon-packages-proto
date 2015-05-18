@@ -1,3 +1,5 @@
+require 'es_map_editor/ui/chunk_renderer'
+
 # Specialized renderer for rendering Map Editor Chunks with grid and border
 # additions
 class EditorChunkRenderer < ChunkRenderer

@@ -1,3 +1,6 @@
+require 'render_primitives/render_container'
+require 'es_map_editor/ui/awesome_button'
+
 module ES
   module UI
     class MapEditorDashboard < Moon::RenderContainer
@@ -12,25 +15,26 @@ module ES
         @warning_color = pal['system/warning']
         @error_color   = pal['system/error']
 
-        @help       = add_button 'book'                              # F1  # 0
-        @new_map    = add_button 'square-o'                          # F2  # 1
-        @new_chunk  = add_button 'plus-square'                       # F3  # 2
-        @reserved4  = add_button ''                                  # F4  # 3
-        @reserved5  = add_button 'download'                          # F5  # 4
-        @reserved6  = add_button 'upload'                            # F6  # 5
-        @reserved7  = add_button ''                                  # F7  # 6
-        @grid       = add_button 'table'                             # F8  # 7
-        @keyboard   = add_button 'keyboard-o'                        # F9  # 8
-        @show_chunk = add_button 'search'                            # F10 # 9
-        @edit       = add_button 'edit'                              # F11 # 11
-        @reserved12 = add_button ''                                  # F12 # 10
+        @help       = add_button 'book',        'F1'                 # F1  # 0
+        @new_map    = add_button 'square-o',    'F2'                 # F2  # 1
+        @new_chunk  = add_button 'plus-square', 'F3'                 # F3  # 2
+        @reserved4  = add_button '',            'F4'                 # F4  # 3
+        @reserved5  = add_button 'download',    'F5'                 # F5  # 4
+        @reserved6  = add_button 'upload',      'F6'                 # F6  # 5
+        @reserved7  = add_button '',            'F7'                 # F7  # 6
+        @grid       = add_button 'table',       'F8'                 # F8  # 7
+        @keyboard   = add_button 'keyboard-o',  'F9'                 # F9  # 8
+        @show_chunk = add_button 'search',      'F10'                # F10 # 9
+        @edit       = add_button 'edit',        'F11'                # F11 # 11
+        @reserved12 = add_button '',            'F12'                # F12 # 10
 
         disable
       end
 
-      def add_button(icon_name)
+      def add_button(icon_name, label = '')
         button = AwesomeButton.new
-        button.text.string = DataCache.charmap('awesome')[icon_name]
+        button.label = label
+        button.icon = DataCache.charmap('awesome')[icon_name]
         button.position = Moon::Vector3.new(@elements.size * button.w, 0, 0)
         add button
         button
@@ -38,9 +42,9 @@ module ES
 
       def state(color, index = nil)
         if index
-          @elements[index].transition('text.color', color, 0.15)
+          @elements[index].transition(:color, color, 0.15)
         else
-          @elements.each { |e| e.text.color.set color }
+          @elements.each { |e| e.color.set color }
         end
       end
 

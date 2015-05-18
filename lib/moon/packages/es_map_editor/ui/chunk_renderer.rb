@@ -1,3 +1,5 @@
+require 'render_primitives/render_context'
+
 # Specialized renderer for rendering Map Chunks
 class ChunkRenderer < Moon::RenderContext
   attr_reader :chunk
