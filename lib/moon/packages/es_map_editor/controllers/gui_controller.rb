@@ -131,8 +131,8 @@ class MapEditorGuiController < State::ControllerBase
 
   def move_chunk(x, y)
     if chunk = chunk_at_position(@model.map_cursor.position.floor)
-      pos = [x, y, 0]
-      chunk.position += pos
+      pos = [x, y]
+      chunk.position += Moon::Vector3[pos, 0]
       @model.map_cursor.move pos
     end
   end
@@ -185,31 +185,59 @@ class MapEditorGuiController < State::ControllerBase
   end
 
   def place_current_tile
+    return unless @model.map_cursor.active?
     return if rect_selection?
     place_tile @view.tile_panel.tile_id
   end
 
-  def copy_tile
+  def sample_tile
+    return unless @model.map_cursor.active?
     return if rect_selection?
-    tile_ids = @view.tile_info.tile_data.tile_ids
-    tile_id = tile_ids.reject { |n| n == -1 }.last || -1
-    @view.tile_panel.tile_id = tile_id
+    if @model.layer > -1
+      @view.tile_panel.tile_id = @view.tile_info.tile_data.tile_ids[@model.layer]
+    else
+      tile_ids = @view.tile_info.tile_data.tile_ids
+      tile_id = tile_ids.reject { |n| n == -1 }.last || -1
+      @view.tile_panel.tile_id = tile_id
+    end
   end
 
   def erase_tile
+    return unless @model.map_cursor.active?
     return if rect_selection?
     place_tile(-1)
   end
 
+  def toggle_tile_panel
+    if @tp_on
+      @model.map_cursor.activate
+      hide_tile_panel
+      show_tile_preview
+      @tp_on = false
+    else
+      @model.map_cursor.deactivate
+      show_tile_panel
+      hide_tile_preview
+      @tp_on = true
+    end
+  end
+
   def select_tile(pos)
+    return unless @tp_on
     @view.tile_panel.select_tile(pos)
   end
 
   def move_cursor(xv, yv)
-    @model.map_cursor.position += [xv, yv]
+    cursor = if @model.map_cursor.active?
+      @model.map_cursor
+    else
+      @view.tile_panel.cursor
+    end
+    cursor.move xv, yv
   end
 
   def set_camera_velocity(x, y)
+    return unless @model.map_cursor.active?
     @model.cam_cursor.velocity.x = x * @model.camera_move_speed.x if x
     @model.cam_cursor.velocity.y = y * @model.camera_move_speed.y if y
   end
