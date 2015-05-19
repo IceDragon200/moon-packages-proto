@@ -9,6 +9,8 @@ module States
 
     def init
       super
+      @tp_clock = Moon::Clock.new
+
       create_mvc
       create_input_delegate
       create_world
@@ -70,11 +72,16 @@ module States
     end
 
     private def create_input_delegate
-      @inp = MapEditorInputDelegate.new engine, @gui_controller
-      @inp.register input
+      @router = MapEditorInputDelegate.new engine, @gui_controller
+
       input.on(:any) do |e|
-        @gui_view.trigger e
-        @map_view.trigger e
+        @router.input.trigger e
+        @gui_view.input.trigger e
+        @map_view.input.trigger e
+      end
+
+      input.on(:mousemove) do |e|
+        @gui_controller.set_cursor_position_from_mouse(e.position)
       end
     end
 

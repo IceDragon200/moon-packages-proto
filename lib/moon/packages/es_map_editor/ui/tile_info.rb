@@ -4,9 +4,9 @@ module ES
       attr_accessor :tileset       # Spritesheet
       attr_accessor :tile_data     # DataModel::TileData
 
-      def initialize
+      def initialize_members
         super
-        @tile_data = nil
+        @tile_data = ES::TileData.new
         @tileset = nil # spritesheet
         @text = Moon::Text.new '', FontCache.font('uni0553', 16)
 
@@ -15,7 +15,7 @@ module ES
       end
 
       def render_content(x, y, z, options)
-        return unless @tile_data
+        return unless @tile_data.valid
 
         tile_ids = @tile_data[:tile_ids] || []
         chunk = @tile_data[:chunk]
@@ -92,7 +92,6 @@ module ES
             @text.render x + xo, y + @tileset.cell_h, z
           end
         end
-        super
       end
     end
   end

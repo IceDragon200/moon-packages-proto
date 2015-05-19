@@ -68,7 +68,7 @@ class MapEditorGuiView < State::ViewBase
   end
 
   def refresh_position
-    @help_panel.position.set(@help_panel.to_rect.align('center', @view).xyz)
+    @help_panel.position.set(@help_panel.to_rect.align('center', @view).position, 0)
     @dashboard.position.set @view.x, @view.y, 0
     @tile_info.position.set @view.x, @dashboard.y2 + 16, 0
     @tile_preview.position.set @view.x2 - @tile_preview.w, @dashboard.y2, 0

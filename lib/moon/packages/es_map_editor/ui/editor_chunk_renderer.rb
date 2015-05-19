@@ -28,13 +28,15 @@ class EditorChunkRenderer < ChunkRenderer
 
   def render_label(x, y, z, options)
     oy = @label_font.size + 8
+    r, b = x + @chunk.w * 32, y + @chunk.h * 32
     @label_font.render(x, y - oy, z, @chunk.name, @label_color, outline: 0)
+    @label_font.render(r, b, z, "#{@chunk.w}x#{@chunk.h}", @label_color, outline: 0)
   end
 
   def render_content(x, y, z, options)
     return unless @chunk
 
-    bound_rect = Moon::Rect.new(0, 0, *(@chunk.bounds.wh * 32))
+    bound_rect = Moon::Rect.new(0, 0, *(@chunk.bounds.resolution * 32))
 
     if options.fetch(:show_underlay, @show_underlay)
       @grid_underlay.clip_rect = bound_rect

@@ -16,6 +16,8 @@ module ES
 
         @text = AnimatedText.new '', FontCache.font('uni0553', 16)
 
+        @tile_id = -2
+        @old_tile_id = -1
         self.tile_id = -1
         self.tileset = nil
       end
@@ -46,7 +48,6 @@ module ES
 
       def update_content(delta)
         @text.update delta
-        super
       end
 
       def render_content(x, y, z, options)
@@ -76,7 +77,6 @@ module ES
         else
           @micro_ss.render x, y, z, 8
         end
-        super
       end
     end
   end

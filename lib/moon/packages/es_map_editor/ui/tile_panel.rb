@@ -94,7 +94,9 @@ module ES
       def tile_id=(n)
         old = @tile_id
         @tile_id = n.to_i
-        if @tile_id != old
+        if @tile_id < 0
+          @cursor.position.set(-1, -1)
+        elsif @tile_id != old
           @cursor.moveto((@tile_id.to_i % @visible_cols).floor,
                          (@tile_id.to_i / @visible_cols).floor)
         end
@@ -144,8 +146,6 @@ module ES
           @text.string = "Tile #{@tile_id}"
           @text.render x + @tile_box.w + 4, text_y, z
         end
-
-        super
       end
     end
   end

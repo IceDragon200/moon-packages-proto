@@ -25,12 +25,16 @@ module Moon
         define_method(setter_name) do |*args, &block|
           old = send(name)
           send(unobserved_setter_name, *args, &block)
-          trigger { ObservedChange.new self, name, old, send(name) }
+          notify(old, name)
         end
       end
     end
 
     include Moon::Eventable
+
+    def notify(old, attribute)
+      trigger { ObservedChange.new self, attribute, old, send(attribute) }
+    end
 
     def self.included(mod)
       mod.extend ClassMethods

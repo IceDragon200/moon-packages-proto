@@ -39,8 +39,8 @@ class MapRenderer < Moon::RenderArray
     resize nil, nil
   end
 
-  def apply_position_modifier(vec3 = 0)
-    pos = super(vec3)
+  def apply_position_modifier(*vec3)
+    pos = super(*vec3)
     pos -= Moon::Vector3[@camera.view_offset, 0] if @camera
     pos
   end

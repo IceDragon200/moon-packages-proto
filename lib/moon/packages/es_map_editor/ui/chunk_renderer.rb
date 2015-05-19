@@ -26,6 +26,10 @@ class ChunkRenderer < Moon::RenderContext
     @tilemap.layer_opacity = layer_opacity
   end
 
+  def refresh_position
+    self.position = @chunk.position * @size
+  end
+
   def refresh
     tileset = @chunk.tileset
     @texture = TextureCache.tileset(tileset.filename)
@@ -33,6 +37,7 @@ class ChunkRenderer < Moon::RenderContext
                                                        tileset.cell_h)
     @tilemap.data = @chunk.data
     @size = Moon::Vector3.new(tileset.cell_w, tileset.cell_h, 1)
+    refresh_position
   end
 
   def chunk=(chunk)
@@ -40,13 +45,11 @@ class ChunkRenderer < Moon::RenderContext
     refresh
   end
 
-  def update(delta)
-    self.position = @chunk.position * @size
-    super
+  def update_content(delta)
+    refresh_position
   end
 
   def render_content(x, y, z, options)
     @tilemap.render(x, y, z, options)
-    super
   end
 end

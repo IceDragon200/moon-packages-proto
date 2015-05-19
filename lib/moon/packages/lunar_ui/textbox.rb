@@ -17,7 +17,7 @@ module Lunar
     #
     private def initialize_events
       super
-      on :typing do |e|
+      input.on :typing do |e|
         @text.string += e.char
       end
 
@@ -25,8 +25,8 @@ module Lunar
         @text.string.clear
       end
 
-      on :press, :backspace do
-        @text.string = @text.string.chop
+      input.on :press do |e|
+        @text.string = @text.string.chop if e.key == :backspace
       end
 
       on :resize do

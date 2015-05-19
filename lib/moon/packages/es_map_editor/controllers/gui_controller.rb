@@ -1,6 +1,14 @@
 class MapEditorGuiController < State::ControllerBase
   attr_accessor :map_controller
 
+  def start
+    super
+
+    @model.map_cursor.on :moved do |e|
+      get_tile_data(@view.tile_info.tile_data, e.position)
+    end
+  end
+
   def center_on_map
     bounds = @model.map.bounds
     @model.cam_cursor.position.set(bounds.cx, bounds.cy, 0)
@@ -200,6 +208,7 @@ class MapEditorGuiController < State::ControllerBase
       tile_id = tile_ids.reject { |n| n == -1 }.last || -1
       @view.tile_panel.tile_id = tile_id
     end
+    @view.tile_preview.tile_id = @view.tile_panel.tile_id
   end
 
   def erase_tile
@@ -225,6 +234,7 @@ class MapEditorGuiController < State::ControllerBase
   def select_tile(pos)
     return unless @tp_on
     @view.tile_panel.select_tile(pos)
+    @view.tile_preview.tile_id = @view.tile_panel.tile_id
   end
 
   def move_cursor(xv, yv)
@@ -245,7 +255,7 @@ class MapEditorGuiController < State::ControllerBase
   def animate_map_zoom(dest)
     zoom = @model.zoom
     @model.zoom = dest
-    puts "Zoom has been disabled"
+    @view.notifications.notify string: "Zoom has been disabled"
   end
 
   def zoom_reset
@@ -304,7 +314,7 @@ class MapEditorGuiController < State::ControllerBase
   def show_chunk_labels
     @view.dashboard.enable 9
     @model.flag_show_chunk_labels = true
-    @view.notifications.notify string: "Showing Chunk Labels"
+    @view.notifications.notify string: 'Showing Chunk Labels'
   end
 
   def hide_chunk_labels
@@ -323,14 +333,17 @@ class MapEditorGuiController < State::ControllerBase
     end
   end
 
-  def get_tile_data(position)
+  def get_tile_data(tile_data, position)
     position = position.floor
     chunk = chunk_at_position(position)
-    tile_data = ES::TileData.new
+    tile_data.valid = false
     if chunk
+      tile_data.valid = true
+      return if tile_data.data_position.x == position.x &&
+        tile_data.data_position.y == position.y
       tile_data.chunk = chunk
-      tile_data.data_position = Moon::Vector3.new(position.x, position.y, 0)
-      tile_data.chunk_data_position = tile_data.data_position - chunk.position
+      tile_data.data_position.set position.x, position.y, 0
+      tile_data.chunk_data_position.set tile_data.data_position - chunk.position
       x, y, _ = *tile_data.chunk_data_position
       tile_data.tile_ids = chunk.data.sampler.pillar(x, y).to_a
       tile_data.passage = chunk.passages[*tile_data.chunk_data_position.xy]
@@ -338,18 +351,13 @@ class MapEditorGuiController < State::ControllerBase
     tile_data
   end
 
-  def update_cursor_position(delta)
-    if !@model.keyboard_only_mode && @model.map_cursor.active?
-      @model.map_cursor.moveto @model.camera.screen_to_world(engine.input.mouse.position).floor
-    end
-    @view.tile_info.tile_data = get_tile_data(@model.map_cursor.position)
+  def set_cursor_position_from_mouse(position)
+    return unless @model.map_cursor.active?
+    return if @model.keyboard_only_mode
+    @model.map_cursor.moveto @model.camera.screen_to_world(position).floor
   end
 
   def update(delta)
-    update_cursor_position(delta)
-
-    @view.tile_preview.tile_id = @view.tile_panel.tile_id
-
     if @model.selection_stage == 1
       @model.selection_rect.position = @model.map_cursor.position
     elsif @model.selection_stage == 2

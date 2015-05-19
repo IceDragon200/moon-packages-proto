@@ -17,7 +17,7 @@ class RectEdgePressureDetector
   def calc(position)
     result = Moon::Vector2.new(0, 0)
     return result unless @rect.contains?(position)
-    rel = position - @rect.xy
+    rel = position - @rect.position
     if rel.x < range
       result.x = 1 - (rel.x / range.to_f)
     elsif rel.x < @rect.w && rel.x >= (@rect.w-@range)
