@@ -31,7 +31,6 @@ module ES
           @layer_ss.clip_rect = @layer_ss.clip_rect.translatef(3, 0)
         end
         @layer_ss.render x, y, z
-        super
       end
     end
   end

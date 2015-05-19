@@ -20,6 +20,5 @@ class BorderRenderer < Moon::RenderContext
       @chunk_borders.render(x,     y + h, z, 6)
       @chunk_borders.render(x + w, y + h, z, 8)
     end
-    super
   end
 end

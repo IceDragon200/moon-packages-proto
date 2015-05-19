@@ -44,7 +44,6 @@ module ES
         ty = y + (h - @icon_text.font.size) / 2
         @icon_text.render tx, ty, z
         @label_text.render tx, ty + h, z
-        super
       end
     end
   end

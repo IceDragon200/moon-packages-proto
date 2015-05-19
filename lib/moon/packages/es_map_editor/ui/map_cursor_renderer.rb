@@ -8,6 +8,5 @@ class MapCursorRenderer < Moon::RenderContext
 
   def render_content(x, y, z, options)
     @sprite.render x, y, z
-    super
   end
 end

@@ -55,7 +55,6 @@ module ES
             end
           end
         end
-        super
       end
     end
   end

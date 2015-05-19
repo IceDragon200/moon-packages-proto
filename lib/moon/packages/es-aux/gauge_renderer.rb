@@ -29,7 +29,6 @@ class GaugeRenderer < Moon::RenderContext
     if @bar_sprite
       @bar_sprite.render(x-@bar_sprite.ox, y-@bar_sprite.oy, z)
     end
-    super
   end
 
   def rate=(rate)

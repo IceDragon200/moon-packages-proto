@@ -18,6 +18,5 @@ class ProxySprite < Moon::RenderContext
       @sprite.render(x, y, z)
       @sprite.opacity = o
     end
-    super
   end
 end

@@ -46,7 +46,6 @@ class EntityRenderer < Moon::RenderContext
         @mp_gauge.hide if @mp_gauge.visible?
       end
     end
-    super
   end
 
   def render_content(x, y, z, options)
@@ -66,6 +65,5 @@ class EntityRenderer < Moon::RenderContext
       #@border_renderer.border_rect = bounds.to_rect_xy
       #@border_renderer.render(bounds.x, bounds.y, bounds.z)
     end
-    super
   end
 end
