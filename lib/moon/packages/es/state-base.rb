@@ -72,45 +72,21 @@ module States
 
     private def register_default_input_events
       input.on :any do |e|
-        @renderer.trigger e
-        @gui.trigger e
+        @renderer.input.trigger e
+        @gui.input.trigger e
+        @debug_shell.input.trigger e if @debug_shell
       end
 
-      input.on :press, :left_bracket do
-        @scheduler.p_job_table
-      end
-
-      input.on :press, :backslash do
-        if @debug_shell
-          stop_debug_shell
-        else
-          launch_debug_shell
+      input.on :press do |e|
+        case e.key
+        when :left_bracket
+          @scheduler.p_job_table
+        when :right_bracket
+          @debug_shell ? stop_debug_shell : launch_debug_shell
+        when :f12
+          state_manager.pop
+          state_manager.push self.class
         end
-      end
-
-      input.typing do |e|
-        @debug_shell.insert e.char if @debug_shell
-      end
-
-      input.on [:press, :repeat], :backspace do
-        @debug_shell.erase if @debug_shell
-      end
-
-      input.on :press, :enter do
-        @debug_shell.exec if @debug_shell
-      end
-
-      input.on :press, :up do
-        @debug_shell.history_prev if @debug_shell
-      end
-
-      input.on :press, :down do
-        @debug_shell.history_next if @debug_shell
-      end
-
-      input.on :press, :f12 do
-        state_manager.pop
-        state_manager.push self.class
       end
     end
 
@@ -137,11 +113,14 @@ module States
     end
 
     def render
+      GC.disable
       @renderables.each do |element|
         element.render
       end
       @debug_shell.render if @debug_shell
       super
+    ensure
+      GC.enable
     end
   end
 end
