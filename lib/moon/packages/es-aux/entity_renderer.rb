@@ -8,6 +8,7 @@ class EntityRenderer < Moon::RenderContext
     @index = 0
     @entity = nil
     @sprite = nil
+    @blok = Moon::Spritesheet.new TextureCache.block('a032x032.png'), 32, 32
     @tilesize = Moon::Vector3.new(32, 32, 32)
     @border_renderer = BorderRenderer.new
   end
@@ -16,10 +17,12 @@ class EntityRenderer < Moon::RenderContext
     @entity = entity
     @sprite = nil
     if @entity
-      filename = 'oryx_lofi_fantasy/3x/lofi_char_3x.png'
-      texture = TextureCache.tileset filename
+      data = @entity[:sprite]
+      @filename = data.filename
+      texture = TextureCache.resource @filename
       @sprite = Moon::Sprite.new(texture)
-      @sprite.clip_rect = Moon::Rect.new(0, 0, 24, 24)
+      #@sprite.clip_rect = Moon::Rect.new(0, 0, 32, 32)
+      @sprite.clip_rect = Moon::Rect.new(0, 0, 0, 0).set(data.clip_rect)
       @sprite.ox = @sprite.w / 2
       @sprite.oy = @sprite.h / 2
       @hp_gauge = GaugeRenderer.new
@@ -51,17 +54,18 @@ class EntityRenderer < Moon::RenderContext
   def render_content(x, y, z, options)
     return unless @entity
     @entity.comp(:transform, :sprite) do |t, s|
-      charpos = Moon::Vector3.new(x, y, z) + t.position * @tilesize
+      charpos = t.position * @tilesize + [x, y, z]
+      #@blok.render(*charpos, 1)
 
-      sx = charpos.x - @sprite.ox
-      sy = charpos.y - @sprite.oy
+      sx = charpos.x + (@tilesize.x - @sprite.w) / 2
+      sy = charpos.y + (@tilesize.y - @sprite.h) / 2
       sz = charpos.z
       @sprite.render(sx, sy, sz)
       @mp_gauge.render(charpos.x, sy, sz, options)
       @hp_gauge.render(charpos.x, sy - @mp_gauge.h, sz, options)
 
-      bounds = Moon::Cuboid.new(sx, sy, sz, @sprite.w, @sprite.h, 1)
-      s.bounds = bounds
+      s.bounds ||= Moon::Cuboid.new
+      s.bounds.set(sx, sy, sz, @sprite.w, @sprite.h, 1)
       #@border_renderer.border_rect = bounds.to_rect_xy
       #@border_renderer.render(bounds.x, bounds.y, bounds.z)
     end
