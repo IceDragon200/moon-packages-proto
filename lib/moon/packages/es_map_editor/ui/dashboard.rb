@@ -1,5 +1,5 @@
 require 'render_primitives/render_container'
-require 'es_map_editor/ui/awesome_button'
+require 'es_map_editor/ui/icon_button'
 
 module ES
   module UI
@@ -15,27 +15,27 @@ module ES
         @warning_color = pal['system/warning']
         @error_color   = pal['system/error']
 
-        @help       = add_button 'book',        'F1'                 # F1  # 0
-        @new_map    = add_button 'square-o',    'F2'                 # F2  # 1
-        @new_chunk  = add_button 'plus-square', 'F3'                 # F3  # 2
-        @reserved4  = add_button '',            'F4'                 # F4  # 3
-        @reserved5  = add_button 'download',    'F5'                 # F5  # 4
-        @reserved6  = add_button 'upload',      'F6'                 # F6  # 5
-        @reserved7  = add_button '',            'F7'                 # F7  # 6
-        @grid       = add_button 'table',       'F8'                 # F8  # 7
-        @keyboard   = add_button 'keyboard-o',  'F9'                 # F9  # 8
-        @show_chunk = add_button 'search',      'F10'                # F10 # 9
-        @edit       = add_button 'edit',        'F11'                # F11 # 11
-        @reserved12 = add_button '',            'F12'                # F12 # 10
+        @help       = add_button 'book-question',        'F1'        # F1  # 0
+        @new_map    = add_button 'map--plus',            'F2'        # F2  # 1
+        @new_chunk  = add_button 'zone--plus',           'F3'        # F3  # 2
+        @reserved4  = add_button 'blank',                'F4'        # F4  # 3
+        @save_map   = add_button 'disk-black',           'F5'        # F5  # 4
+        @load_map   = add_button 'folder-open-document', 'F6'        # F6  # 5
+        @reserved7  = add_button 'blank',                'F7'        # F7  # 6
+        @grid       = add_button 'border',               'F8'        # F8  # 7
+        @keyboard   = add_button 'keyboard-space',       'F9'        # F9  # 8
+        @show_chunk = add_button 'ui-tooltip',           'F10'       # F10 # 9
+        @edit       = add_button 'wrench',               'F11'       # F11 # 11
+        @reserved12 = add_button 'blank',                'F12'       # F12 # 10
 
         disable
       end
 
       def add_button(icon_name, label = '')
-        button = AwesomeButton.new
+        button = IconButton.new
+        button.icon_sprite = Moon::Sprite.new(TextureCache.resource("icons/map_editor/2x/#{icon_name}_2x.png"))
         button.label = label
-        button.icon = DataCache.charmap('awesome')[icon_name]
-        button.position = Moon::Vector3.new(@elements.size * button.w, 0, 0)
+        button.position = Moon::Vector3.new(@elements.size * (button.w + 16), 0, 0)
         add button
         button
       end

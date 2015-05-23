@@ -27,6 +27,8 @@ module States
       @map_controller.start
       @gui_controller.start
 
+      @model.notify_all
+
       # debug
       scheduler.print_jobs
       @model.ppd_ev
@@ -37,11 +39,9 @@ module States
       view = view.translate(-(view.w / 2), -(view.h / 2))
       data = File.exist?('editor.yml') ? YAML.load_file('editor.yml') : {}
       @model = MapEditorModelBinder.new(model: MapEditorModel.new(data))
-      @model.on :any do |e|
-        puts e.inspect
-      end
       @model.camera = Camera2.new(view: view)
       @model.tile_palette.tileset = ES::Tileset.find_by(uri: '/tilesets/common')
+      @model.layer ||= -1
     end
 
     private def create_view
@@ -62,7 +62,6 @@ module States
       @map_controller.gui_controller = @gui_controller
       @updatables.push @map_controller
       @updatables.push @gui_controller
-      @gui_controller.set_layer(-1)
     end
 
     private def create_mvc

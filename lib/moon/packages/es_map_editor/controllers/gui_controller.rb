@@ -4,6 +4,18 @@ class MapEditorGuiController < State::ControllerBase
   def start
     super
 
+    @model.on :changed do |e|
+      case e.attribute
+      when :show_chunk_labels
+        on_show_chunk_labels(e.value)
+      when :show_grid
+        @map_controller.on_show_grid
+        @view.dashboard.toggle 7, e.value
+      when :layer
+        on_layer_changed(e.value)
+      end
+    end
+
     @model.map_cursor.on :moved do |e|
       get_tile_data(@view.tile_info.tile_data, e.position)
     end
@@ -34,8 +46,7 @@ class MapEditorGuiController < State::ControllerBase
   end
 
   def toggle_grid
-    @map_controller.toggle_grid(!@model.show_grid)
-    @view.dashboard.toggle 7, @model.show_grid
+    @model.show_grid = !@model.show_grid
   end
 
   def new_map
@@ -163,8 +174,17 @@ class MapEditorGuiController < State::ControllerBase
     refresh_follow
   end
 
-  def set_layer(layer)
-    @model.layer = layer
+  def on_show_chunk_labels(value)
+    if value
+      @view.dashboard.enable 9
+      @view.notifications.notify string: 'Showing Chunk Labels'
+    else
+      @view.dashboard.disable 9
+      @view.notifications.clear
+    end
+  end
+
+  def on_layer_changed(layer)
     @view.layer_view.index = @model.layer
     if @model.layer < 0
       @map_controller.layer_opacity = @model.layer_opacity.map { 1.0 }
@@ -178,6 +198,10 @@ class MapEditorGuiController < State::ControllerBase
     else
       @view.notifications.notify string: "Layer #{layer} set for editing"
     end
+  end
+
+  def set_layer(value)
+    @model.layer = value
   end
 
   def place_tile(tile_id)
@@ -278,6 +302,7 @@ class MapEditorGuiController < State::ControllerBase
   def show_help
     @view.dashboard.enable 0
     @view.notifications.notify string: "Help"
+    @view.help_panel.resize nil, nil
     @view.help_panel.show
   end
 
@@ -285,6 +310,14 @@ class MapEditorGuiController < State::ControllerBase
     @view.dashboard.disable 0
     @view.notifications.clear
     @view.help_panel.hide
+  end
+
+  def toggle_help
+    if @view.help_panel.visible?
+      hide_help
+    else
+      show_help
+    end
   end
 
   def show_tile_info
@@ -312,15 +345,11 @@ class MapEditorGuiController < State::ControllerBase
   end
 
   def show_chunk_labels
-    @view.dashboard.enable 9
-    @model.flag_show_chunk_labels = true
-    @view.notifications.notify string: 'Showing Chunk Labels'
+    @model.show_chunk_labels = true
   end
 
   def hide_chunk_labels
-    @view.dashboard.disable 9
-    @model.flag_show_chunk_labels = false
-    @view.notifications.clear
+    @model.show_chunk_labels = false
   end
 
   def edit_tile_palette

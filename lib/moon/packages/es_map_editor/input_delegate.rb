@@ -152,11 +152,7 @@ class MapEditorInputDelegate < State::InputDelegateBase
   def register_dashboard_help
     ## help
     on_press @control_map['help'] do
-      @controller.show_help
-    end
-
-    on_release @control_map['help'] do
-      @controller.hide_help
+      @controller.toggle_help
     end
   end
 

@@ -14,8 +14,7 @@ class MapEditorMapController < State::ControllerBase
     refresh_layer_opacity
   end
 
-  def toggle_grid(enabled)
-    @model.show_grid = enabled
+  def on_show_grid
     @view.refresh_grid
   end
 end

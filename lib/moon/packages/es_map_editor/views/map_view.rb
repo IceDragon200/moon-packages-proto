@@ -11,6 +11,7 @@ class MapEditorMapView < State::ViewBase
   def initialize_view
     super
     @tileselection_rect = ES::UI::SelectionTileRect.new
+    @tileselection_rect.tile_rect = @model.selection_rect
     @map_renderer = EditorMapRenderer.new
     @map_cursor = MapCursorRenderer.new
     texture  = TextureCache.block 'e032x032.png'
@@ -52,7 +53,7 @@ class MapEditorMapView < State::ViewBase
   end
 
   def update_content(delta)
-    show_labels = @model.flag_show_chunk_labels
+    show_labels = @model.show_chunk_labels
     campos = -@model.camera.view_offset.floor
     pos = @model.map_cursor.position * @model.camera.tilesize + campos
     @map_cursor.position.set pos.x, pos.y, 0
@@ -63,15 +64,15 @@ class MapEditorMapView < State::ViewBase
     super
   end
 
-  def render_edit_mode
-    campos = @model.camera.view_offset.floor
-    if @model.selection_stage > 0
-      @tileselection_rect.render(*(-campos))
+  def render_edit_mode(x, y, z, options)
+    if @model.selection_stage > 1
+      pos = @map_renderer.position
+      @tileselection_rect.render(pos.x, pos.y, pos.z)
     end
   end
 
   def render_content(x, y, z, options)
-    render_edit_mode
+    render_edit_mode x, y, z, options
     super
   end
 end

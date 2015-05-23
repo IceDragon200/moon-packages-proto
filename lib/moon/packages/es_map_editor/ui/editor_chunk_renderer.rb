@@ -7,6 +7,7 @@ class EditorChunkRenderer < ChunkRenderer
   attr_accessor :show_label
   attr_accessor :show_underlay
   attr_accessor :show_overlay
+  attr_accessor :border_renderer
 
   def init
     super
@@ -24,6 +25,11 @@ class EditorChunkRenderer < ChunkRenderer
 
     @label_color = Moon::Vector4.new(1, 1, 1, 1)
     @label_font = FontCache.font('uni0553', 16)
+  end
+
+  def update_content(delta)
+    super
+    @border_renderer.update delta
   end
 
   def render_label(x, y, z, options)

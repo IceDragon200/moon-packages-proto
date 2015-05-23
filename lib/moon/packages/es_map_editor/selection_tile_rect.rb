@@ -41,18 +41,17 @@ module ES
       end
 
       def render_content(x, y, z, options)
-        if @spritesheet
-          cw, ch = @cell_size.x, @cell_size.y
-          px, py, pz = *(@tile_rect.xyz * @cell_size + [x, y, z])
-          render_options = { color: @color }.merge(options)
-          @tile_rect.h.times do |i|
-            row = py + i * ch
-            @tile_rect.w.times do |j|
-              @spritesheet.render px + j * cw,
-                                  row,
-                                  pz,
-                                  6, render_options
-            end
+        return unless @spritesheet
+        cw, ch = @cell_size.x, @cell_size.y
+        px, py, pz = *((@cell_size * [@tile_rect.x, @tile_rect.y, 0]) + [x, y, z])
+        render_options = { color: @color }.merge(options)
+        @tile_rect.h.times do |i|
+          row = py + i * ch
+          @tile_rect.w.times do |j|
+            @spritesheet.render px + j * cw,
+                                row,
+                                pz,
+                                6, render_options
           end
         end
       end
