@@ -1,14 +1,15 @@
-require 'state_mvc/model_base'
 require 'state_mvc/observable'
 
 class State
-  class ModelBinder < ModelBase
+  class ModelBinder
     include Moon::Eventable
     include Moon::Observable
 
-    def pre_initialize
-      super
+    def initialize(options)
       initialize_eventable
+      options.each do |key, value|
+        send("#{key}=", value)
+      end
     end
 
     def self.delegate_attr(target, *args)
@@ -29,8 +30,8 @@ class State
       observe_attr key
     end
 
-    def self.bind_model(model, target = :model)
-      field target, type: model
+    def self.schema(model, target = :model)
+      attr_accessor target
       model.each_field do |key, _|
         bind_model_field target, key
       end
