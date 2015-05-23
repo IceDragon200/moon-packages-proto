@@ -4,15 +4,15 @@ module Moon
   module Observable
     class ObservedChange < Moon::Event
       attr_accessor :obj
-      attr_accessor :name
-      attr_accessor :old
-      attr_accessor :cur
+      attr_accessor :attribute
+      attr_accessor :old_value
+      attr_accessor :value
 
-      def initialize(obj, name, old, cur)
+      def initialize(obj, attribute, old_value, value)
         @obj = obj
-        @name = name
-        @old = old
-        @cur = cur
+        @attribute = attribute
+        @old_value = old_value
+        @value = value
         super :changed
       end
     end
