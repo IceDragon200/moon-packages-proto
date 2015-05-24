@@ -4,12 +4,13 @@ module States
   class Base < ::State
     include StateMiddlewarable
     middleware SchedulerMiddleware
-    middleware InputMiddleware
     include Moon::TransitionHost
 
-    attr_reader :updatables
-    attr_reader :renderables
+    attr_reader :input
+    attr_reader :input_list
+    attr_reader :render_list
     attr_reader :tree
+    attr_reader :update_list
 
     class CVar
       def initialize
@@ -36,11 +37,6 @@ module States
       @@__cvar__
     end
 
-    # @return [Moon::Eventable]
-    def input
-      middleware(InputMiddleware).handle
-    end
-
     # @return [Moon::Scheduler]
     def scheduler
       middleware(SchedulerMiddleware).scheduler
@@ -48,8 +44,14 @@ module States
 
     def init
       super
-      @updatables = []
-      @renderables = []
+      @update_list = []
+      @render_list = []
+      @input_list = []
+
+      @input = Moon::Input::Observer.new
+      exh = ->(exc, backtrace) { on_exception(exc, backtrace) }
+      @input.on_exception = exh
+
       @renderer = Moon::RenderContainer.new
       @gui = Moon::RenderContainer.new
       @tree = Moon::Tree.new
@@ -57,10 +59,12 @@ module States
       @tree.add @renderer
       @tree.add @gui
 
-      @updatables << @renderer
-      @updatables << @gui
-      @renderables << @renderer
-      @renderables << @gui
+      @input_list << @renderer
+      @input_list << @gui
+      @update_list << @renderer
+      @update_list << @gui
+      @render_list << @renderer
+      @render_list << @gui
 
       register_default_events
       register_input
@@ -72,15 +76,19 @@ module States
 
     private def register_default_input_events
       input.on :any do |e|
-        @renderer.input.trigger e
-        @gui.input.trigger e
-        @debug_shell.input.trigger e if @debug_shell
+        if @debug_shell
+          @debug_shell.input.trigger e
+        else
+          @input_list.each do |elm|
+            elm.input.trigger e
+          end
+        end
       end
 
       input.on :press do |e|
         case e.key
         when :left_bracket
-          @scheduler.p_job_table
+          scheduler.print_jobs
         when :right_bracket
           @debug_shell ? stop_debug_shell : launch_debug_shell
         when :f12
@@ -95,7 +103,8 @@ module States
     end
 
     def launch_debug_shell
-      @debug_shell = DebugShell.new(FontCache.font('uni0553', 16))
+      @debug_shell = DebugShell.new
+      @debug_shell.resize(screen.w, @debug_shell.h)
       @debug_shell.position.set(0, 0, 0)
     end
 
@@ -105,16 +114,17 @@ module States
 
     # @param [Float] delta
     def update(delta)
-      @updatables.each do |element|
+      @update_list.each do |element|
         element.update delta
       end
+      @debug_shell.update delta if @debug_shell
       update_transitions delta
-      super delta
+      super
     end
 
     def render
       GC.disable
-      @renderables.each do |element|
+      @render_list.each do |element|
         element.render
       end
       @debug_shell.render if @debug_shell
