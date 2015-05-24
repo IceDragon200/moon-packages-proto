@@ -17,7 +17,7 @@ module States
       create_map
       create_autosave_interval
 
-      input.ppd_ev
+      input.print_event_listeners
     end
 
     def start
@@ -31,7 +31,7 @@ module States
 
       # debug
       scheduler.print_jobs
-      @model.ppd_ev
+      @model.print_event_listeners
     end
 
     private def create_model
@@ -60,8 +60,8 @@ module States
       @gui_controller = MapEditorGuiController.new engine, @model, @gui_view
       @gui_controller.map_controller = @map_controller
       @map_controller.gui_controller = @gui_controller
-      @updatables.push @map_controller
-      @updatables.push @gui_controller
+      @update_list.push @map_controller
+      @update_list.push @gui_controller
     end
 
     private def create_mvc
@@ -73,20 +73,18 @@ module States
     private def create_input_delegate
       @router = MapEditorInputDelegate.new engine, @gui_controller
 
-      input.on(:any) do |e|
-        @router.input.trigger e
-        @gui_view.input.trigger e
-        @map_view.input.trigger e
-      end
+      @input_list << @router
+      @input_list << @gui_view
+      @input_list << @map_view
 
-      input.on(:mousemove) do |e|
+      input.on :mousemove do |e|
         @gui_controller.set_cursor_position_from_mouse(e.position)
       end
     end
 
     private def create_world
       @world = Moon::EntitySystem::World.new
-      @updatables.unshift @world
+      @update_list.unshift @world
     end
 
     private def create_map
