@@ -1,4 +1,3 @@
-require 'es-aux/taggable'
 require 'es-aux/core_ext/string'
 require 'es-aux/scheduler_ext/scheduler'
 require 'es-aux/moon_ext/sprite'

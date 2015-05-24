@@ -1,10 +1,16 @@
-require 'es-aux/taggable'
+require 'es/taggable'
 
 module Moon
   class Scheduler
     module Jobs
       class Base
-        include ES::Taggable
+        include Moon::Taggable
+
+        attr_writer :tags
+
+        def tags
+          @tags ||= []
+        end
       end
     end
 
