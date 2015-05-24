@@ -1,11 +1,17 @@
 module ES
   module UI
     class IconButton < Moon::RenderContext
+      include Moon::Activatable
+
+      attr_accessor :active
       attr_accessor :icon_sprite
+      attr_accessor :icon_sprite_active
 
       def initialize_content
         super
+        @active = false
         @icon_sprite = nil
+        @icon_sprite_active = nil
         @label_text = Moon::Text.new '', FontCache.font('system', 16)
       end
 
@@ -34,7 +40,11 @@ module ES
       end
 
       def render_content(x, y, z, options)
-        @icon_sprite.render x, y, z
+        if active? && @icon_sprite_active
+          @icon_sprite_active.render x, y, z
+        else
+          @icon_sprite.render x, y, z
+        end
         @label_text.render x, y + h, z
       end
     end
