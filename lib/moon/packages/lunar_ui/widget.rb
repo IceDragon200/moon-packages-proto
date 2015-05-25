@@ -1,7 +1,6 @@
 require 'render_primitives/render_container'
 
 module Lunar
-  ##
   # Widget base class
   class Widget < Moon::RenderContainer
     # @return [Boolean]
@@ -10,7 +9,7 @@ module Lunar
     attr_reader :background
 
     #
-    def init
+    def initialize_members
       @focused = false
       super
     end
