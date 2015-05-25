@@ -1,3 +1,4 @@
+require 'es_map_editor/color'
 require 'es_map_editor/bindings/map_editor_model_binder'
 
 module States
@@ -22,6 +23,7 @@ module States
 
     def start
       super
+      screen.clear_color = ES::Color.hex 0xc9d0d3
       #@map_controller.refresh_follow
       @gui_controller.refresh_follow
       @map_controller.start
