@@ -5,12 +5,11 @@ module Lunar
     # @return [Moon::Text]
     attr_reader :text
 
-    ##
     #
     def initialize_elements
       super
       @text = Text.new
-      add(@text)
+      add @text
     end
   end
 end

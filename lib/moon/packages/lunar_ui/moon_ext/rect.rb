@@ -2,14 +2,12 @@ module Moon
   class Rect
     include RenderPrimitive::Rectangular
 
-    ##
     # @param [String] str
     # @param [Moon::Rect] rect
     def align(str, rect)
       dup.align!(str, rect)
     end
 
-    ##
     # @param [Integer] cx
     # @param [Integer] cy
     def contract(cx, cy = cx)
