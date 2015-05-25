@@ -6,8 +6,8 @@ module States
     end
 
     def register_cancel_inputs
-      input.on :press, :escape, :c, :enter do
-        early_finish
+      input.on :press do |e|
+        early_finish if [:escape, :c, :enter].include?(e.key)
       end
     end
 
