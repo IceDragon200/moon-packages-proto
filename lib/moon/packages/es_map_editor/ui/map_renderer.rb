@@ -7,7 +7,7 @@ class MapRenderer < Moon::RenderArray
   # @return [Array<Float>]
   attr_reader :layer_opacity
 
-  def init
+  def initialize_members
     super
     @layer_opacity = [1.0, 1.0]
   end

@@ -5,17 +5,20 @@ class BorderRenderer < Moon::RenderContext
   attr_accessor :border_rect
   attr_accessor :animate
 
-  def init
+  def initialize_members
     super
-    @texture = TextureCache.ui('chunk_outline_3x3.png')
-    @chunk_borders = Moon::Spritesheet.new(@texture, 32, 32)
-    @border_rect = Moon::Rect.new(0, 0, 0, 0)
-
     @animate = false
     @amount = 8
     @direction = 1
     @offset = 0
     @speed = 1
+  end
+
+  def initialize_content
+    super
+    @texture = TextureCache.ui('chunk_outline_3x3.png')
+    @chunk_borders = Moon::Spritesheet.new(@texture, 32, 32)
+    @border_rect = Moon::Rect.new(0, 0, 0, 0)
   end
 
   def update_content(delta)

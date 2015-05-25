@@ -1,7 +1,7 @@
 class GaugeRenderer < Moon::RenderContext
   attr_reader :rate
 
-  def init
+  def initialize_members
     super
     @rate = 1.0
   end

@@ -4,10 +4,14 @@ require 'render_primitives/render_context'
 class ChunkRenderer < Moon::RenderContext
   attr_reader :chunk
 
-  def init
+  def initialize_members
+    super
+    @size = Moon::Vector3.new(1, 1, 1)
+  end
+
+  def initialize_content
     super
     @tilemap = Moon::Tilemap.new
-    @size = Moon::Vector3.new(1, 1, 1)
   end
 
   def w

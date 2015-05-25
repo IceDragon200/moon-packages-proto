@@ -3,13 +3,17 @@ class EntityRenderer < Moon::RenderContext
   attr_accessor :tilesize
   attr_reader :entity
 
-  def init
+  def initialize_members
     super
     @index = 0
     @entity = nil
     @sprite = nil
-    @blok = Moon::Spritesheet.new TextureCache.block('a032x032.png'), 32, 32
     @tilesize = Moon::Vector3.new(32, 32, 32)
+  end
+
+  def initialize_content
+    super
+    @blok = Moon::Spritesheet.new TextureCache.block('a032x032.png'), 32, 32
     @border_renderer = BorderRenderer.new
   end
 

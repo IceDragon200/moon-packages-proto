@@ -15,7 +15,7 @@ class State
     end
 
     #
-    private def init
+    private def initialize_content
       super
       initialize_view
     end

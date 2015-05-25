@@ -3,10 +3,14 @@ class SpritesetMap < Moon::RenderContainer
   attr_reader :tilesize
   attr_reader :world
 
-  def init
+  def initialize_members
     super
     @dm_map = nil
     @world = nil
+  end
+
+  def initialize_content
+    super
     @map_renderer = EditorMapRenderer.new
     @entities = Moon::RenderArray.new
     @tilesize = Moon::Vector3.new(32, 32, 32)

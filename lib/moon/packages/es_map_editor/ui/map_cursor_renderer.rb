@@ -1,6 +1,6 @@
 # Generic Map Cursor renderer
 class MapCursorRenderer < Moon::RenderContext
-  def init
+  def initialize_content
     super
     @texture = TextureCache.ui('map_editor_cursor.png')
     @sprite = Moon::Sprite.new(@texture)

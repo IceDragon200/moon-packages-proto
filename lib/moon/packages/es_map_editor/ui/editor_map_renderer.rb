@@ -8,7 +8,7 @@ class EditorMapRenderer < MapRenderer
   attr_accessor :show_underlay
   attr_accessor :show_overlay
 
-  def init
+  def initialize_members
     super
     @show_borders = false
     @show_labels = false

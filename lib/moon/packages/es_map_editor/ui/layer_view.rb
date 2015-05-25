@@ -4,11 +4,15 @@ module ES
       attr_accessor :index
       attr_accessor :layer_count
 
-      def init
+      def initialize_members
+        super
+        @index = -1
+        @layer_count = 2
+      end
+
+      def initialize_content
         super
         @layer_ss = Moon::Sprite.new(TextureCache.ui('hud_mockup.png'))
-        @layer_count = 2
-        @index = -1
       end
 
       def w

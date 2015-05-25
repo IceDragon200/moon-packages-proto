@@ -6,9 +6,12 @@ module ES
       attr_accessor :spritesheet
       attr_reader :cell_size
 
-      def init
-        super
+      def initialize_members
         @active = false
+      end
+
+      def initialize_content
+        super
         @tile_rect = Moon::Rect.new(0, 0, 0, 0)
         @spritesheet = nil
         @cell_size = Moon::Vector3.new(0, 0, 0)

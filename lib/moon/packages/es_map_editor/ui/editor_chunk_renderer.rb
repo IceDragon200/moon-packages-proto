@@ -9,13 +9,16 @@ class EditorChunkRenderer < ChunkRenderer
   attr_accessor :show_overlay
   attr_accessor :border_renderer
 
-  def init
+  def initialize_members
     super
     @show_border = false
     @show_label = false
     @show_underlay = false
     @show_overlay = false
+  end
 
+  def initialize_content
+    super
     @underlay_texture = TextureCache.ui('grid_32x32_ff777777.png')
     @overlay_texture = TextureCache.ui('grid_32x32_ffffffff.png')
     @grid_underlay = Moon::Sprite.new(@underlay_texture)
