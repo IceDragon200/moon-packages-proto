@@ -6,28 +6,15 @@ module Lunar
     class ButtonEvent < Moon::Event
       attr_reader :button
 
-      def initialize(button, key)
+      def initialize(button, type)
         @button = button
-        super key
-      end
-    end
-
-    class PressEvent < ButtonEvent
-      def initialize(button)
-        super button, :button_press
-      end
-    end
-
-    class DepressEvent < ButtonEvent
-      def initialize(button)
-        super button, :button_depress
+        super type
       end
     end
 
     # @return [Moon::Text]
     attr_reader :text
 
-    ##
     #
     def initialize_elements
       super
@@ -41,12 +28,16 @@ module Lunar
     end
 
     def initialize_button_events
-      on :press, :mouse_left do |e|
-        trigger PressEvent.new(self) if screen_bounds.contains?(e.position)
+      on :press do |e|
+        if e.button == :mouse_left && screen_bounds.contains?(e.position)
+          trigger ButtonEvent.new(self, :button_press)
+        end
       end
 
-      on :release, :mouse_left do |e|
-        trigger DepressEvent.new(self) if screen_bounds.contains?(e.position)
+      on :release do |e|
+        if e.button == :mouse_left && screen_bounds.contains?(e.position)
+          trigger ButtonEvent.new(self, :button_release)
+        end
       end
     end
   end
