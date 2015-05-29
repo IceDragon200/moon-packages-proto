@@ -18,7 +18,7 @@ module ES
         @help       = add_button 'F1',  'book-question', 'book-open-text'
         @new_map    = add_button 'F2',  'map--plus'
         @new_chunk  = add_button 'F3',  'zone--plus'
-        @reserved4  = add_button 'F4',  'blank'
+        @edit_map   = add_button 'F4',  'map--pencil'
         @save_map   = add_button 'F5',  'disk-black'
         @load_map   = add_button 'F6',  'folder-open-document'
         @play_map   = add_button 'F7',  'application-run'
