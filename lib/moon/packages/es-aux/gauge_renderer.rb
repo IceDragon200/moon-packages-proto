@@ -8,10 +8,10 @@ class GaugeRenderer < Moon::RenderContext
 
   def set_texture(texture, cw, ch)
     @gauge_texture = texture
-    @base_sprite = Moon::Sprite.new(@gauge_texture)
-    @base_sprite.clip_rect = Moon::Rect.new(0, 0, cw, ch)
-    @bar_sprite = Moon::Sprite.new(@gauge_texture)
-    @bar_sprite.clip_rect = Moon::Rect.new(0, ch, cw, ch)
+    @base_sprite = Moon::Sprite.new @gauge_texture
+    @base_sprite.clip_rect = Moon::Rect.new 0, 0, cw, ch
+    @bar_sprite = Moon::Sprite.new @gauge_texture
+    @bar_sprite.clip_rect = Moon::Rect.new 0, ch, cw, ch
 
     @base_sprite.ox = @base_sprite.w / 2
     @base_sprite.oy = @base_sprite.h
@@ -20,23 +20,28 @@ class GaugeRenderer < Moon::RenderContext
 
     self.w = @base_sprite.w
     self.h = @base_sprite.h
+
+    on_rate_changed
   end
 
   def render_content(x, y, z, options)
     if @base_sprite
-      @base_sprite.render(x-@base_sprite.ox, y-@base_sprite.oy, z)
+      @base_sprite.render(x - @base_sprite.ox, y - @base_sprite.oy, z)
     end
     if @bar_sprite
-      @bar_sprite.render(x-@bar_sprite.ox, y-@bar_sprite.oy, z)
+      @bar_sprite.render(x - @bar_sprite.ox, y - @bar_sprite.oy, z)
     end
+  end
+
+  def on_rate_changed
+    return unless @bar_sprite
+    rect = @bar_sprite.clip_rect.dup
+    rect.w = @gauge_texture.w * @rate
+    @bar_sprite.clip_rect = rect
   end
 
   def rate=(rate)
     @rate = [[rate, 1.0].min, 0.0].max
-    if @bar_sprite
-      rect = @bar_sprite.clip_rect.dup
-      rect.w = @gauge_texture.w * @rate
-      @bar_sprite.clip_rect = rect
-    end
+    on_rate_changed
   end
 end

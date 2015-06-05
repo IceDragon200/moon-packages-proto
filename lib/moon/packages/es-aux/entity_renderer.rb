@@ -30,9 +30,9 @@ class EntityRenderer < Moon::RenderContext
       @sprite.ox = @sprite.w / 2
       @sprite.oy = @sprite.h / 2
       @hp_gauge = GaugeRenderer.new
-      @hp_gauge.set_texture(TextureCache.gauge('gauge_48x6_hp.png'), 48, 6)
+      @hp_gauge.set_texture TextureCache.gauge('gauge_48x6_hp.png'), 48, 6
       @mp_gauge = GaugeRenderer.new
-      @mp_gauge.set_texture(TextureCache.gauge('gauge_48x4_mp.png'), 48, 4)
+      @mp_gauge.set_texture TextureCache.gauge('gauge_48x4_mp.png'), 48, 4
     end
   end
 
@@ -57,19 +57,20 @@ class EntityRenderer < Moon::RenderContext
 
   def render_content(x, y, z, options)
     return unless @entity
-    @entity.comp(:transform, :sprite) do |t, s|
+
+    @entity.comp :transform, :sprite  do |t, s|
       charpos = t.position * @tilesize + [x, y, z]
       #@blok.render(*charpos, 1)
 
-      sx = charpos.x + (@tilesize.x - @sprite.w) / 2
-      sy = charpos.y + (@tilesize.y - @sprite.h) / 2
+      sx = charpos.x + (@tilesize.x / 2) - @sprite.ox
+      sy = charpos.y + (@tilesize.y / 2) - @sprite.oy
       sz = charpos.z
-      @sprite.render(sx, sy, sz)
-      @mp_gauge.render(charpos.x, sy, sz, options)
-      @hp_gauge.render(charpos.x, sy - @mp_gauge.h, sz, options)
+      @sprite.render sx, sy, sz
+      @mp_gauge.render sx, sy, sz, options
+      @hp_gauge.render sx, sy - @mp_gauge.h, sz, options
 
       s.bounds ||= Moon::Cuboid.new
-      s.bounds.set(sx, sy, sz, @sprite.w, @sprite.h, 1)
+      s.bounds.set sx, sy, sz, @sprite.w, @sprite.h, 1
       #@border_renderer.border_rect = bounds.to_rect_xy
       #@border_renderer.render(bounds.x, bounds.y, bounds.z)
     end
