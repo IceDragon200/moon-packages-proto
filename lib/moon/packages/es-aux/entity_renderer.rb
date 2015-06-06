@@ -20,8 +20,7 @@ class EntityRenderer < Moon::RenderContext
   def entity=(entity)
     @entity = entity
     @sprite = nil
-    if @entity
-      data = @entity[:sprite]
+    if @entity && (data = @entity[:sprite])
       @filename = data.filename
       texture = TextureCache.resource @filename
       @sprite = Moon::Sprite.new(texture)
@@ -30,7 +29,13 @@ class EntityRenderer < Moon::RenderContext
       @sprite.ox = @sprite.w / 2
       @sprite.oy = @sprite.h / 2
       @hp_gauge = GaugeRenderer.new
-      @hp_gauge.set_texture TextureCache.gauge('gauge_48x6_hp.png'), 48, 6
+      hp_gauge_texture = if (team_component = @entity[:team]) &&
+          team_component.number == Enum::Team::ENEMY
+        TextureCache.gauge('gauge_48x6_red.png')
+      else
+        TextureCache.gauge('gauge_48x6_hp.png')
+      end
+      @hp_gauge.set_texture hp_gauge_texture, 48, 6
       @mp_gauge = GaugeRenderer.new
       @mp_gauge.set_texture TextureCache.gauge('gauge_48x4_mp.png'), 48, 4
     end
