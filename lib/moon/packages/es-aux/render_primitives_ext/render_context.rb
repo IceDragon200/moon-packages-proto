@@ -1,15 +1,5 @@
-require 'es/taggable'
-
 module Moon
   class RenderContext
-    include Moon::Taggable
-
-    attr_writer :tags
-
-    def tags
-      @tags ||= []
-    end
-
     def everyone
       return to_enum :everyone unless block_given?
       yield self

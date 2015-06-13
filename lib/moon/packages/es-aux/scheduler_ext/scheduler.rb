@@ -1,19 +1,5 @@
-require 'es/taggable'
-
 module Moon
   class Scheduler
-    module Jobs
-      class Base
-        include Moon::Taggable
-
-        attr_writer :tags
-
-        def tags
-          @tags ||= []
-        end
-      end
-    end
-
     def print_jobs
       table = []
       l = Moon::Logfmt::Logger.new(module: 'scheduler')
