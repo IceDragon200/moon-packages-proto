@@ -46,14 +46,14 @@ class EntityRenderer < Moon::RenderContext
   def update_content(delta)
     if @entity
       if health = @entity[:health]
-        @hp_gauge.rate = health.rate
+        @hp_gauge.rate = health.rate if @hp_gauge.rate != health.rate
         @hp_gauge.show unless @hp_gauge.visible?
       else
         @hp_gauge.rate = 0
         @hp_gauge.hide if @hp_gauge.visible?
       end
       if mana = @entity[:mana]
-        @mp_gauge.rate = mana.rate
+        @mp_gauge.rate = mana.rate if @mp_gauge.rate != mana.rate
         @mp_gauge.show unless @mp_gauge.visible?
       else
         @mp_gauge.rate = 0
@@ -73,8 +73,8 @@ class EntityRenderer < Moon::RenderContext
       sy = charpos.y + (@tilesize.y / 2) - @sprite.oy
       sz = charpos.z
       @sprite.render sx, sy, sz
-      @mp_gauge.render sx, sy, sz, options
-      @hp_gauge.render sx, sy - @mp_gauge.h, sz, options
+      @mp_gauge.render sx + @sprite.ox, sy, sz, options
+      @hp_gauge.render sx + @sprite.ox, sy - @mp_gauge.h, sz, options
 
       s.bounds ||= Moon::Cuboid.new
       s.bounds.set sx, sy, sz, @sprite.w, @sprite.h, 1
