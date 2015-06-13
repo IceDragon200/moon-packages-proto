@@ -72,6 +72,14 @@ module States
       register_input
     end
 
+    def terminate
+      super
+      @tree.clear_children
+      @input_list.clear
+      @update_list.clear
+      @render_list.clear
+    end
+
     private def register_default_events
       register_default_input_events
     end
