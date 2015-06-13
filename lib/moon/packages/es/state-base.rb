@@ -53,7 +53,9 @@ module States
       @input.on_exception = exh
 
       @renderer = Moon::RenderContainer.new
+      @renderer.tag 'renderer'
       @gui = Moon::RenderContainer.new
+      @gui.tag 'gui'
       @tree = Moon::Tree.new
 
       @tree.add @renderer
