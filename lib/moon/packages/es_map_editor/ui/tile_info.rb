@@ -47,7 +47,7 @@ module ES
 
 
         # draw blocks for passage
-        if passage == ES::Passage::NONE
+        if passage == Enum::Passage::NONE
           @block_ss.render x + @block_ss.cell_w,
                            y + @block_ss.cell_h,
                            z,
@@ -56,27 +56,27 @@ module ES
           @block_ss.render x + @block_ss.cell_w,
                            y,
                            z,
-                           passage.masked?(ES::Passage::UP) ? 9 : 8
+                           passage.masked?(Enum::Passage::UP) ? 9 : 8
           #
           @block_ss.render x,
                            y + @block_ss.cell_h,
                            z,
-                           passage.masked?(ES::Passage::LEFT) ? 9 : 8
+                           passage.masked?(Enum::Passage::LEFT) ? 9 : 8
           #
           @block_ss.render x + @block_ss.cell_w,
                            y + @block_ss.cell_h,
                            z,
-                           passage.masked?(ES::Passage::ABOVE) ? 12 : 1
+                           passage.masked?(Enum::Passage::ABOVE) ? 12 : 1
           #
           @block_ss.render x + @block_ss.cell_w * 2,
                            y + @block_ss.cell_h,
                            z,
-                           passage.masked?(ES::Passage::RIGHT) ? 9 : 8
+                           passage.masked?(Enum::Passage::RIGHT) ? 9 : 8
           #
           @block_ss.render x + @block_ss.cell_w,
                            y + @block_ss.cell_h * 2,
                            z,
-                           passage.masked?(ES::Passage::DOWN) ? 9 : 8
+                           passage.masked?(Enum::Passage::DOWN) ? 9 : 8
         end
 
         if @tileset
