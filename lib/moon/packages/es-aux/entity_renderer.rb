@@ -25,7 +25,9 @@ class EntityRenderer < Moon::RenderContext
       texture = TextureCache.resource @filename
       @sprite = Moon::Sprite.new(texture)
       #@sprite.clip_rect = Moon::Rect.new(0, 0, 32, 32)
-      @sprite.clip_rect = Moon::Rect.new(0, 0, 0, 0).set(data.clip_rect)
+      if data.clip_rect
+        @sprite.clip_rect = Moon::Rect.new(0, 0, 0, 0).set(data.clip_rect)
+      end
       @sprite.ox = @sprite.w / 2
       @sprite.oy = @sprite.h / 2
       @hp_gauge = GaugeRenderer.new
