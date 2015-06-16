@@ -1,9 +1,9 @@
-require 'es-aux/proxy_sprite'
+require 'es-aux/sprite_context'
 
 module Moon
   class Sprite
-    def to_proxy_sprite
-      prx = ProxySprite.new
+    def to_sprite_context
+      prx = SpriteContext.new
       prx.sprite = self
       prx
     end

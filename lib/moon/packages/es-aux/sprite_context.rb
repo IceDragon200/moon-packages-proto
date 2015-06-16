@@ -1,4 +1,4 @@
-class ProxySprite < Moon::RenderContext
+class SpriteContext < Moon::RenderContext
   attr_accessor :sprite
 
   def w

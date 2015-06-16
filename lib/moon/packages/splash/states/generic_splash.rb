@@ -6,7 +6,7 @@ module States
   class GenericSplash < Splash
     def init
       super
-      @foreground = Moon::Sprite.new(splash_texture).to_proxy_sprite
+      @foreground = Moon::Sprite.new(splash_texture).to_sprite_context
       @foreground.position.x = (screen.w - @foreground.w) / 2
       @foreground.position.y = (screen.h - @foreground.h) / 2
       @foreground.sprite.opacity = 0.0
