@@ -61,9 +61,9 @@ module States
       @input.on_exception = exh
 
       @renderer = Moon::RenderContainer.new
-      @renderer.tag 'renderer'
+      @renderer.tag 'renderer' if @renderer.respond_to?(:tag)
       @gui = Moon::RenderContainer.new
-      @gui.tag 'gui'
+      @gui.tag 'gui' if @gui.respond_to?(:tag)
       @tree = Moon::Tree.new
 
       @tree.add @renderer
