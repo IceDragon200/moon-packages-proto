@@ -5,3 +5,4 @@ description: Middleware for Moon's default State class
 require: _basalt.rb
 deps:
   - std
+  - moon-logfmt
