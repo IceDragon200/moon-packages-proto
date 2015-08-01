@@ -1,6 +1,6 @@
 module ES
   module UI
-    class AnimatedText < Moon::Text
+    class AnimatedText < Moon::Label
       attr_reader :time
       attr_reader :duration
       attr_accessor :target_text
@@ -38,12 +38,12 @@ module ES
       def initialize(*args, &block)
         @time = 1.0
         @duration = 1.0
-        super
+        super '', FontCache.font('system', 18)
       end
 
       # @return [self]
       def clear
-        self.string = nil
+        self.string = ''
         arm(1.0).finish
         self
       end

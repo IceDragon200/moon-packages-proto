@@ -3,8 +3,8 @@ module ES
     class AwesomeButton < Moon::RenderContext
       def initialize_content
         super
-        @icon_text = Moon::Text.new '', FontCache.font('awesome', 24)
-        @label_text = Moon::Text.new '', FontCache.font('system', 16)
+        @icon_text = Moon::Label.new '', FontCache.font('awesome', 24)
+        @label_text = Moon::Label.new '', FontCache.font('system', 16)
       end
 
       def color

@@ -1,6 +1,6 @@
 module ES
   module UI
-    class PositionMonitor < Moon::Text
+    class PositionMonitor < Moon::Label
       attr_accessor :obj
 
       def initialize

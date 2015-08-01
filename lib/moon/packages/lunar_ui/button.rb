@@ -12,14 +12,14 @@ module Lunar
       end
     end
 
-    # @return [Moon::Text]
-    attr_reader :text
+    # @return [Moon::Label]
+    attr_reader :label
 
     #
     def initialize_elements
       super
-      @text = Text.new
-      add(@text)
+      @label = Moon::Label.new
+      add(@label)
     end
 
     def initialize_widget_events

@@ -36,7 +36,7 @@ module ES
         @cursor = PanelCursor.new
         @cursor.position = Moon::Vector2.new 0, 0
 
-        @text = Moon::Text.new '', FontCache.font('uni0553', 16)
+        @text = Moon::Label.new '', FontCache.font('uni0553', 16)
 
         texture = TextureCache.block 'e032x032.png'
         @block_ss = Moon::Spritesheet.new texture, 32, 32

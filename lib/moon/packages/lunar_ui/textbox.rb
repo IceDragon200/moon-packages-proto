@@ -4,13 +4,13 @@ module Lunar
   #
   class Textbox < Widget
     # @!attribute [r] text
-    #   @return [Moon::Text]
+    #   @return [Moon::Label]
     attr_reader :text
 
     #
     private def initialize_elements
       super
-      @text = Text.new
+      @text = Moon::Label.new
       add @text
     end
 

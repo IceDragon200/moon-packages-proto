@@ -12,7 +12,7 @@ module ES
         @active = false
         @icon_sprite = nil
         @icon_sprite_active = nil
-        @label_text = Moon::Text.new '', FontCache.font('system', 16)
+        @label_text = Moon::Label.new '', FontCache.font('system', 16)
       end
 
       def color

@@ -2,14 +2,14 @@ require 'lunar_ui/widget'
 
 module Lunar
   class Label < Widget
-    # @return [Moon::Text]
-    attr_reader :text
+    # @return [Moon::Label]
+    attr_reader :label
 
     #
     def initialize_elements
       super
-      @text = Text.new
-      add @text
+      @label = Label.new
+      add @label
     end
   end
 end

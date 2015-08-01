@@ -55,7 +55,7 @@ module Lunar
     end
 
     def refresh_item(item, i)
-      text = Moon::Text.new(item.title, @font)
+      text = Moon::Label.new(item.title, @font)
       text.position.y = i * (@font.size + 4)
       add(text)
       @texts << text

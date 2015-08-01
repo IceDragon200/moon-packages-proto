@@ -6,7 +6,7 @@ class ModeIcon < Moon::RenderContainer
     @icons = icons
     @font_awesome = ES.cache.font('awesome', 32)
     @charmap_awesome = ES.cache.charmap('awesome.yml')
-    @text = Moon::Text.new('', @font_awesome)
+    @text = Moon::Label.new('', @font_awesome)
 
     add(@text)
   end
