@@ -39,11 +39,11 @@ module ES
       end
 
       def w
-        @w ||= @background_ss.cell_w
+        @w ||= @background_ss.w
       end
 
       def h
-        @h ||= @background_ss.cell_h
+        @h ||= @background_ss.h
       end
 
       def update_content(delta)
@@ -70,9 +70,9 @@ module ES
             end
           end
 
-          dx = (@background_ss.cell_w - @text.w) / 2
+          dx = (@background_ss.w - @text.w) / 2
           @text.render dx + x,
-                       diff.y + y + @tileset.cell_h - 4,
+                       diff.y + y + @tileset.h - 4,
                        z
         else
           @micro_ss.render x, y, z, 8

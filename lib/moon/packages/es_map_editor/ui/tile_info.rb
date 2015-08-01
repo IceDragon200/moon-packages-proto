@@ -48,48 +48,48 @@ module ES
 
         # draw blocks for passage
         if passage == Enum::Passage::NONE
-          @block_ss.render x + @block_ss.cell_w,
-                           y + @block_ss.cell_h,
+          @block_ss.render x + @block_ss.w,
+                           y + @block_ss.h,
                            z,
                            8
         else
-          @block_ss.render x + @block_ss.cell_w,
+          @block_ss.render x + @block_ss.w,
                            y,
                            z,
                            passage.masked?(Enum::Passage::UP) ? 9 : 8
           #
           @block_ss.render x,
-                           y + @block_ss.cell_h,
+                           y + @block_ss.h,
                            z,
                            passage.masked?(Enum::Passage::LEFT) ? 9 : 8
           #
-          @block_ss.render x + @block_ss.cell_w,
-                           y + @block_ss.cell_h,
+          @block_ss.render x + @block_ss.w,
+                           y + @block_ss.h,
                            z,
                            passage.masked?(Enum::Passage::ABOVE) ? 12 : 1
           #
-          @block_ss.render x + @block_ss.cell_w * 2,
-                           y + @block_ss.cell_h,
+          @block_ss.render x + @block_ss.w * 2,
+                           y + @block_ss.h,
                            z,
                            passage.masked?(Enum::Passage::RIGHT) ? 9 : 8
           #
-          @block_ss.render x + @block_ss.cell_w,
-                           y + @block_ss.cell_h * 2,
+          @block_ss.render x + @block_ss.w,
+                           y + @block_ss.h * 2,
                            z,
                            passage.masked?(Enum::Passage::DOWN) ? 9 : 8
         end
 
         if @tileset
-          y += @block_ss.cell_h * 3
+          y += @block_ss.h * 3
           tile_ids.each_with_index do |tile_id, i|
             next if tile_id < 0
-            xo = @tileset.cell_w * i
+            xo = @tileset.w * i
 
 
             @tileset.render x + xo, y, z, tile_id
 
             @text.string = tile_id.to_s
-            @text.render x + xo, y + @tileset.cell_h, z
+            @text.render x + xo, y + @tileset.h, z
           end
         end
       end
