@@ -8,7 +8,7 @@ class MapEditorInputDelegate < State::InputDelegateBase
 
   def on_keys(type, *args, &block)
     keys = args.flatten.map(&:to_sym)
-    input.on(*Array[type].flatten) do |e, elm|
+    input.on(Array[type].flatten) do |e, elm|
       block.call(e, elm) if keys.include?(e.key)
     end
   end
