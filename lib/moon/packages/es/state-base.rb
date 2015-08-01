@@ -42,6 +42,14 @@ module States
       middleware(SchedulerMiddleware).scheduler
     end
 
+    def on_exception(exc, backtrace)
+      STDERR.puts exc.inspect
+      backtrace.each_with_index do |line, i|
+        STDERR.puts "\t[#{backtrace.size - i}] #{line}"
+      end
+      fail
+    end
+
     def init
       super
       @update_list = []
