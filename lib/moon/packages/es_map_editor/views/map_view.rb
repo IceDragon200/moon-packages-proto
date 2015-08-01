@@ -20,7 +20,7 @@ class MapEditorMapView < State::ViewBase
     @tileselection_rect.spritesheet = @cursor_ss
     @tileselection_rect.color = color
 
-    create_passage_layer
+    #create_passage_layer
 
     add @map_renderer
     add @map_cursor
@@ -28,9 +28,9 @@ class MapEditorMapView < State::ViewBase
 
   private def create_passage_layer
     t = @passage_tilemap = Moon::Tilemap.new
-    t.position.set 0, 0, 0
-    t.tileset = @passage_ss
-    t.data = @passage_data # special case passage data
+    t.tileset = @cursor_ss
+    # special case passage data
+    t.set data: @passage_data.data, datasize: @passage_data.sizes
   end
 
   def refresh_layer_opacity

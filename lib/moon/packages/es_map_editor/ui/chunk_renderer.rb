@@ -39,7 +39,7 @@ class ChunkRenderer < Moon::RenderContext
     @texture = TextureCache.tileset(tileset.filename)
     @tilemap.tileset = Moon::Spritesheet.new(@texture, tileset.cell_w,
                                                        tileset.cell_h)
-    @tilemap.data = @chunk.data
+    @tilemap.set data: @chunk.data.data, datasize: @chunk.data.sizes
     @size = Moon::Vector3.new(tileset.cell_w, tileset.cell_h, 1)
     refresh_position
   end
@@ -54,6 +54,6 @@ class ChunkRenderer < Moon::RenderContext
   end
 
   def render_content(x, y, z, options)
-    @tilemap.render(x, y, z, options)
+    @tilemap.render(x, y, z)
   end
 end
