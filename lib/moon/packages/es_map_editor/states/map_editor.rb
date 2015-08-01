@@ -17,8 +17,6 @@ module States
       create_world
       create_map
       create_autosave_interval
-
-      input.print_event_listeners
     end
 
     def start
@@ -33,7 +31,6 @@ module States
 
       # debug
       scheduler.print_jobs
-      @model.print_event_listeners
     end
 
     private def create_model
