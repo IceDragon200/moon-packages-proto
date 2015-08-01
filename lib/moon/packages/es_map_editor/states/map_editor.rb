@@ -21,7 +21,7 @@ module States
 
     def start
       super
-      screen.clear_color = ES::Color.hex 0xc9d0d3
+      screen.clear_color = ES::Color.hex(0xc9d0d3) * [0.2, 0.2, 0.2, 1.0]
       #@map_controller.refresh_follow
       @gui_controller.refresh_follow
       @map_controller.start
