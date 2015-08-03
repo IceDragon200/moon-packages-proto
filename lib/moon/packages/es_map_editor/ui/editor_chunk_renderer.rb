@@ -27,7 +27,8 @@ class EditorChunkRenderer < ChunkRenderer
     @border_renderer = BorderRenderer.new
 
     @label_color = Moon::Vector4.new(1, 1, 1, 1)
-    @label_font = FontCache.font('uni0553', 16)
+    font = FontCache.font('uni0553', 16)
+    @label_text = Moon::Text.new font, ''
   end
 
   def update_content(delta)
@@ -36,10 +37,16 @@ class EditorChunkRenderer < ChunkRenderer
   end
 
   def render_label(x, y, z, options)
-    oy = @label_font.size + 8
+    oy = @label_text.font.size + 8
     r, b = x + @chunk.w * 32, y + @chunk.h * 32
-    @label_font.render(x, y - oy, z, @chunk.name, @label_color, outline: 0)
-    @label_font.render(r, b, z, "#{@chunk.w}x#{@chunk.h}", @label_color, outline: 0)
+
+    @label_text.color = @label_color
+
+    @label_text.string = @chunk.name
+    @label_text.render(x, y - oy, z)
+
+    @label_text.string = "#{@chunk.w}x#{@chunk.h}"
+    @label_text.render(r, b, z)
   end
 
   def render_content(x, y, z, options)
