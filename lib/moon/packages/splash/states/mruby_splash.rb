@@ -1,7 +1,7 @@
 module States
   class MrubySplash < GenericSplash
     def splash_texture
-      Moon::Texture.new 'resources/splash/mruby_logo_red.png'
+      game.texture_cache['splash/mruby_logo_red']
     end
   end
 end

@@ -1,7 +1,7 @@
 module States
   class MoonSplash < GenericSplash
     def splash_texture
-      Moon::Texture.new 'resources/splash/moon_logo.png'
+      game.texture_cache['splash/moon_logo']
     end
   end
 end
