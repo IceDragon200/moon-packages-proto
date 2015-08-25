@@ -1,4 +1,5 @@
 require 'es_map_editor/ui/chunk_renderer'
+require 'es_map_editor/ui/grid_renderer'
 
 # Specialized renderer for rendering Map Editor Chunks with grid and border
 # additions
@@ -19,15 +20,13 @@ class EditorChunkRenderer < ChunkRenderer
 
   def initialize_content
     super
-    @underlay_texture = TextureCache.ui('grid_32x32_ff777777.png')
-    @overlay_texture = TextureCache.ui('grid_32x32_ffffffff.png')
-    @grid_underlay = Moon::Sprite.new(@underlay_texture)
-    @grid_overlay  = Moon::Sprite.new(@overlay_texture)
+    @grid_underlay = ES::GridRenderer.new texture: ES.game.texture_cache.ui('grid_32x32_ff777777.png')
+    @grid_overlay  = ES::GridRenderer.new texture: ES.game.texture_cache.ui('grid_32x32_ffffffff.png')
 
     @border_renderer = BorderRenderer.new
 
     @label_color = Moon::Vector4.new(1, 1, 1, 1)
-    font = FontCache.font('uni0553', 16)
+    font = ES.game.font_cache.font('uni0553', 16)
     @label_text = Moon::Text.new font, ''
   end
 
@@ -52,22 +51,22 @@ class EditorChunkRenderer < ChunkRenderer
   def render_content(x, y, z, options)
     return unless @chunk
 
-    bound_rect = Moon::Rect.new(0, 0, *(@chunk.bounds.resolution * 32))
+    bounds = @chunk.bounds.resolution * 32
 
     if options.fetch(:show_underlay, @show_underlay)
-      @grid_underlay.clip_rect = bound_rect
+      @grid_underlay.bounds = bounds
       @grid_underlay.render(x, y, z)
     end
 
     super
 
     if options.fetch(:show_border, @show_border)
-      @border_renderer.border_rect = bound_rect
-      @border_renderer.render(x, y, z, options)
+      @border_renderer.border_rect = Moon::Rect.new(0, 0, *bounds)
+      @border_renderer.render(x, y, z + 0.2, options)
     end
 
     if options.fetch(:show_overlay, @show_overlay)
-      @grid_overlay.clip_rect = bound_rect
+      @grid_overlay.bounds = bounds
       @grid_overlay.render(x, y, z)
     end
 

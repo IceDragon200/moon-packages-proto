@@ -9,12 +9,12 @@ module ES
 
       def initialize
         super
-        texture = TextureCache.block 'e008x008.png'
+        texture = ES.game.texture_cache.block 'e008x008.png'
         @micro_ss = Moon::Spritesheet.new texture, 8, 8
-        texture = TextureCache.block 'e064x064.png'
+        texture = ES.game.texture_cache.block 'e064x064.png'
         @background_ss = Moon::Spritesheet.new texture, 64, 64
 
-        @text = AnimatedText.new '', FontCache.font('uni0553', 16)
+        @text = AnimatedText.new '', ES.game.font_cache.font('uni0553', 16)
 
         @tile_id = -2
         @old_tile_id = -1
@@ -61,7 +61,7 @@ module ES
               @tileset.render diff.x + x, diff.y + y, z, @tile_id
             end
           else
-            r = @text.time / @text.duration
+            r = @text.rate
             if @tile_id >= 0
               @tileset.render diff.x + x, diff.y + y, z, @tile_id, opacity: r
             end
@@ -71,7 +71,7 @@ module ES
           end
 
           dx = (@background_ss.w - @text.w) / 2
-          @text.render dx + x,
+          @text.render x + dx,
                        diff.y + y + @tileset.h - 4,
                        z
         else

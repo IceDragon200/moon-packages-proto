@@ -25,8 +25,8 @@ class MapEditorGuiView < State::ViewBase
 
   def initialize_view
     super
-    @font = FontCache.font('uni0553', 16)
-    @controlmap = DataCache.controlmap('map_editor')
+    @font = game.font_cache.font('uni0553', 16)
+    @controlmap = game.data_cache.controlmap('map_editor')
 
     @hud = Moon::RenderContainer.new
 
@@ -43,7 +43,7 @@ class MapEditorGuiView < State::ViewBase
 
     @notifications    = ES::UI::Notifications.new
 
-    texture = TextureCache.block 'passage_blocks.png'
+    texture = ES.game.texture_cache.block 'passage_blocks.png'
     @passage_ss = Moon::Spritesheet.new texture, 32, 32
 
     @notifications.font = @font

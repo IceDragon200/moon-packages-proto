@@ -36,12 +36,12 @@ module ES
         @cursor = PanelCursor.new
         @cursor.position = Moon::Vector2.new 0, 0
 
-        @text = Moon::Label.new '', FontCache.font('uni0553', 16)
+        @text = Moon::Label.new '', ES.game.font_cache.font('uni0553', 16)
 
-        texture = TextureCache.block 'e032x032.png'
+        texture = ES.game.texture_cache.block 'e032x032.png'
         @block_ss = Moon::Spritesheet.new texture, 32, 32
 
-        background_texture = TextureCache.ui 'hud_mockup_4x.png'
+        background_texture = ES.game.texture_cache.ui 'hud_mockup_4x.png'
         @background_s = Moon::Sprite.new background_texture
         @background_s.clip_rect = Moon::Rect.new 24, 216, 272, 272
         @tile_box = Moon::Sprite.new background_texture

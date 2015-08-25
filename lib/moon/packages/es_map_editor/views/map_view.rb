@@ -1,10 +1,9 @@
 require 'std/mixins/transition_host'
 
 class MapEditorMapView < State::ViewBase
-  include Moon::TransitionHost
-
   def start
     super
+    @scheduler = Moon::Scheduler.new
     refresh_tilemaps
   end
 
@@ -14,9 +13,9 @@ class MapEditorMapView < State::ViewBase
     @tileselection_rect.tile_rect = @model.selection_rect
     @map_renderer = EditorMapRenderer.new
     @map_cursor = MapCursorRenderer.new
-    texture  = TextureCache.block 'e032x032.png'
+    texture  = game.texture_cache.block 'e032x032.png'
     @cursor_ss  = Moon::Spritesheet.new texture, 32, 32
-    color = DataCache.palette['system/selection']
+    color = game.data_cache.palette['system/selection']
     @tileselection_rect.spritesheet = @cursor_ss
     @tileselection_rect.color = color
 
@@ -36,10 +35,12 @@ class MapEditorMapView < State::ViewBase
   def refresh_layer_opacity
     src = @map_renderer.layer_opacity.dup
     dest = @model.layer_opacity.dup
-    add_transition 0, 1, 0.25 do |d|
+    @scheduler.transition 0, 1, 0.25 do |d|
+      ops = @map_renderer.layer_opacity.dup
       dest.each_with_index do |n, i|
-        @map_renderer.layer_opacity[i] = src[i].lerp(n, d)
+        ops[i] = src[i].lerp(n, d)
       end
+      @map_renderer.layer_opacity = ops
     end
   end
 
@@ -61,6 +62,7 @@ class MapEditorMapView < State::ViewBase
     @map_renderer.show_labels = show_labels
     refresh_grid
     @map_renderer.position.set(campos.x, campos.y, 0)
+    @scheduler.update(delta)
     super
   end
 

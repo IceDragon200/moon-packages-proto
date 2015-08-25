@@ -1,44 +1,12 @@
+require 'es_map_editor/ui/animated_text'
+
 module ES
   module UI
-    class AnimatedText < Moon::Label
-      attr_reader :time
-      attr_reader :duration
-      attr_accessor :target_text
-
-      def arm(duration)
-        show
-        @time = 0
-        @duration = duration
-        @target_string = string.dup
-        self
-      end
-
-      def finish
-        @time = @duration
-        self.string = @target_string.dup
-        self
-      end
-
-      def done?
-        @time >= @duration
-      end
-
-      def update(delta)
-        return if done?
-        if @string
-          @time += delta
-          @time = @duration if @time > @duration
-          self.string = @target_string[0, ((@time / @duration) * @target_string.size).to_i]
-        end
-        self
-      end
-    end
-
     class Notifications < AnimatedText
       def initialize(*args, &block)
         @time = 1.0
         @duration = 1.0
-        super '', FontCache.font('system', 18)
+        super '', ES.game.font_cache.font('system', 18)
       end
 
       # @return [self]

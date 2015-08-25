@@ -44,10 +44,10 @@ module States
     end
 
     private def create_view
-      @map_view = MapEditorMapView.new(model: @model, view: engine.screen.rect)
-      @gui_view = MapEditorGuiView.new(model: @model, view: engine.screen.rect.contract(16))
+      @map_view = MapEditorMapView.new(game: game, model: @model, view: engine.screen.rect)
+      @gui_view = MapEditorGuiView.new(game: game, model: @model, view: engine.screen.rect.contract(16))
       tileset = @model.tile_palette.tileset
-      texture = TextureCache.tileset(tileset.filename)
+      texture = game.texture_cache.tileset(tileset.filename)
       @gui_view.tileset = Moon::Spritesheet.new(texture, tileset.cell_w,
                                                          tileset.cell_h)
       @renderer.add @map_view

@@ -8,9 +8,9 @@ module ES
         super
         @tile_data = ES::TileData.new
         @tileset = nil # spritesheet
-        @text = Moon::Label.new '', FontCache.font('uni0553', 16)
+        @text = Moon::Label.new '', ES.game.font_cache.font('uni0553', 16)
 
-        texture = TextureCache.block 'e008x008.png'
+        texture = ES.game.texture_cache.block 'e008x008.png'
         @block_ss = Moon::Spritesheet.new(texture, 8, 8)
       end
 

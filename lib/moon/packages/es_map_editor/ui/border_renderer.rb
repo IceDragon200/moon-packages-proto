@@ -16,7 +16,7 @@ class BorderRenderer < Moon::RenderContext
 
   def initialize_content
     super
-    @texture = TextureCache.ui('chunk_outline_3x3.png')
+    @texture = ES.game.texture_cache.ui('chunk_outline_3x3.png')
     @chunk_borders = Moon::Spritesheet.new(@texture, 32, 32)
     @border_rect = Moon::Rect.new(0, 0, 0, 0)
   end

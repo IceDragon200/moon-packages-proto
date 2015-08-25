@@ -3,7 +3,7 @@ require 'state_mvc/input_delegate_base'
 class MapEditorInputDelegate < State::InputDelegateBase
   def init
     super
-    @control_map = DataCache.controlmap('map_editor')
+    @control_map = ES.game.data_cache.controlmap('map_editor')
   end
 
   def on_keys(type, *args, &block)

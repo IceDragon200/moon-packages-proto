@@ -4,7 +4,7 @@ module ES
       attr_accessor :obj
 
       def initialize
-        super '', FontCache.font('uni0553', 16)
+        super '', ES.game.font_cache.font('uni0553', 16)
         @obj = nil
       end
 

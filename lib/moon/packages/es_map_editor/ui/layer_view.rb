@@ -12,7 +12,7 @@ module ES
 
       def initialize_content
         super
-        @layer_ss = Moon::Sprite.new(TextureCache.ui('hud_mockup.png'))
+        @layer_ss = Moon::Sprite.new(ES.game.texture_cache.ui('hud_mockup.png'))
       end
 
       def w

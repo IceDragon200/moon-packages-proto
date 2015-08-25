@@ -36,7 +36,7 @@ class ChunkRenderer < Moon::RenderContext
 
   def refresh
     tileset = @chunk.tileset
-    @texture = TextureCache.tileset(tileset.filename)
+    @texture = ES.game.texture_cache.tileset(tileset.filename)
     @tilemap.tileset = Moon::Spritesheet.new(@texture, tileset.cell_w,
                                                        tileset.cell_h)
     @tilemap.set data: @chunk.data.data, datasize: @chunk.data.sizes

@@ -24,7 +24,7 @@ module ES
         super
         @background.windowskin = Moon::Spritesheet.new('resources/ui/console_windowskin_dark_16x16.png', 16, 16)
 
-        @text = Moon::Label.new '', FontCache.font('uni0553', 16)
+        @text = Moon::Label.new '', ES.game.font_cache.font('uni0553', 16)
         @text.string = '' <<
           "#{human_key(@controlmap["erase_tile"])} to erase current tile\n" <<
           "#{human_key(@controlmap["sample_tile"])} to sample current tile\n" <<
