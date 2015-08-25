@@ -1,6 +1,8 @@
 class State
   #
   class ViewBase < Moon::RenderContainer
+    attr_accessor :game
+
     # @return [State::ModelBase]
     attr_accessor :model
 
@@ -10,8 +12,9 @@ class State
     # @param [Hash<Symbol, Object>] options
     private def initialize_from_options(options)
       super
+      @game  = options.fetch(:game)
       @model = options.fetch(:model, nil)
-      @view = options.fetch(:view)
+      @view  = options.fetch(:view)
     end
 
     #
