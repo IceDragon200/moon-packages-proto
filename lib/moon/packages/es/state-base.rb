@@ -2,11 +2,8 @@
 module States
   # Base class for all ES based states
   class Base < ::State
-    include StateMiddlewarable
-    middleware SchedulerMiddleware
-    include Moon::TransitionHost
-
     attr_reader :input
+    attr_reader :scheduler
     attr_reader :input_list
     attr_reader :render_list
     attr_reader :tree
@@ -37,11 +34,6 @@ module States
       @@__cvar__
     end
 
-    # @return [Moon::Scheduler]
-    def scheduler
-      middleware(SchedulerMiddleware).scheduler
-    end
-
     def on_exception(exc, backtrace)
       STDERR.puts exc.inspect
       backtrace.each_with_index do |line, i|
@@ -56,14 +48,14 @@ module States
       @render_list = []
       @input_list = []
 
+      @scheduler = Moon::Scheduler.new
       @input = Moon::Input::Observer.new
-      exh = ->(exc, backtrace) { on_exception(exc, backtrace) }
-      @input.on_exception = exh
+      @input.on_exception = ->(exc, backtrace) { on_exception(exc, backtrace) }
 
       @renderer = Moon::RenderContainer.new
-      @renderer.tag 'renderer' if @renderer.respond_to?(:tag)
+      @renderer.tag 'renderer'
       @gui = Moon::RenderContainer.new
-      @gui.tag 'gui' if @gui.respond_to?(:tag)
+      @gui.tag 'gui'
       @tree = Moon::Tree.new
 
       @tree.add @renderer
@@ -71,6 +63,7 @@ module States
 
       @input_list << @renderer
       @input_list << @gui
+      @update_list << @scheduler
       @update_list << @renderer
       @update_list << @gui
       @render_list << @renderer
@@ -82,6 +75,7 @@ module States
 
     def terminate
       super
+      @scheduler.clear
       @tree.clear_children
       @input_list.clear
       @update_list.clear
@@ -124,9 +118,13 @@ module States
       @debug_shell = DebugShell.new
       @debug_shell.resize(screen.w, @debug_shell.h)
       @debug_shell.position.set(0, 0, 0)
+      @update_list << @debug_shell
+      @render_list << @debug_shell
     end
 
     def stop_debug_shell
+      @update_list.delete @debug_shell
+      @render_list.delete @debug_shell
       @debug_shell = nil
     end
 
@@ -135,8 +133,6 @@ module States
       @update_list.each do |element|
         element.update delta
       end
-      @debug_shell.update delta if @debug_shell
-      update_transitions delta
       super
     end
 
@@ -145,7 +141,6 @@ module States
       @render_list.each do |element|
         element.render
       end
-      @debug_shell.render if @debug_shell
       super
     ensure
       GC.enable

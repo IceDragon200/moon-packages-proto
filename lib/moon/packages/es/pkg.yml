@@ -5,6 +5,5 @@ description: ES common modules.
 require: _basalt.rb
 deps:
   - std
-  - state_middleware
   - scheduler
   - render_primitives
