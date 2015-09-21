@@ -7,4 +7,4 @@ Moon Packages (Prototype)
 
 These are scripts written for the [Moon Engine](https://github.com/polyfox/moon).
 
-These are project specific scripts for the Moon Engine, seen [packages](https://github.com/polyfox/moon-packages), instead if you are interested in the Moon standard packages. 
+Scripts here are specific to my personal projects, see [packages](https://github.com/polyfox/moon-packages), instead if you are interested in the Moon standard packages. 
