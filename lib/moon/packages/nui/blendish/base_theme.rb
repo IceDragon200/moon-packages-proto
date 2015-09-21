@@ -13,7 +13,7 @@ module UI
       def initialize_copy(other)
         super
         other.each_field_with_value do |key, _, value|
-          field_set key, value.safe_dup
+          field_set key, value.maybe_dup
         end
         self
       end
