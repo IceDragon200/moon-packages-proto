@@ -8,14 +8,14 @@ module Lunar
     attr_reader :text
 
     #
-    private def initialize_elements
+    protected def initialize_elements
       super
       @text = Moon::Label.new
       add @text
     end
 
     #
-    private def initialize_events
+    protected def initialize_events
       super
       input.on :typing do |e|
         @text.string += e.char

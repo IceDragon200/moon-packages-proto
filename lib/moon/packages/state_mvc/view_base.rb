@@ -10,7 +10,7 @@ class State
     attr_accessor :view
 
     # @param [Hash<Symbol, Object>] options
-    private def initialize_from_options(options)
+    protected def initialize_from_options(options)
       super
       @game  = options.fetch(:game)
       @model = options.fetch(:model, nil)
@@ -18,7 +18,7 @@ class State
     end
 
     #
-    private def initialize_content
+    protected def initialize_content
       super
       initialize_view
     end

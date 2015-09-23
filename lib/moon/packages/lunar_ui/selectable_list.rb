@@ -5,7 +5,7 @@ module Lunar
     include Moon::Indexable
 
     #
-    private def initialize_elements
+    protected def initialize_elements
       super
       initialize_index
       @items = []

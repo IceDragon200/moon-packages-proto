@@ -15,13 +15,13 @@ module Lunar
     end
 
     #
-    private def initialize_elements
+    protected def initialize_elements
       super
       create_background
     end
 
     #
-    private def initialize_events
+    protected def initialize_events
       super
       initialize_widget_events
     end
