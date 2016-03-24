@@ -41,6 +41,13 @@ module States
       fail
     end
 
+    protected def create_render_contexts
+      @renderer = Moon::RenderContainer.new
+      @renderer.tag 'renderer'
+      @gui = Moon::RenderContainer.new
+      @gui.tag 'gui'
+    end
+
     def init
       super
       @update_list = []
@@ -51,10 +58,7 @@ module States
       @input = Moon::Input::Observer.new
       @input.on_exception = ->(exc, backtrace) { on_exception(exc, backtrace) }
 
-      @renderer = Moon::RenderContainer.new
-      @renderer.tag 'renderer'
-      @gui = Moon::RenderContainer.new
-      @gui.tag 'gui'
+      create_render_contexts
 
       @input_list << @renderer
       @input_list << @gui
