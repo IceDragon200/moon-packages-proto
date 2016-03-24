@@ -11,6 +11,16 @@ class SpriteContext < Moon::RenderContext
     @sprite.texture = texture
   end
 
+  # @return [Moon::Rect]
+  def clip_rect
+    @sprite.clip_rect
+  end
+
+  # @param [Moon::Rect] clip_rect
+  def clip_rect=(clip_rect)
+    @sprite.clip_rect = clip_rect
+  end
+
   # @return [Integer]
   def w
     (@sprite && @sprite.w) || 0
