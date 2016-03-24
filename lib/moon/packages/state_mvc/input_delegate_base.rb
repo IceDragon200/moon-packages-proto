@@ -5,6 +5,9 @@ class State
   #
   class InputDelegateBase
     include Moon::Eventable
+    include Moon::Taggable
+
+    attr_accessor :tags
 
     # @return [Moon::Engine]
     attr_accessor :engine
@@ -17,6 +20,7 @@ class State
       @engine = engine
       @controller = controller
       @input = Moon::Input::Observer.new
+      @tags = []
       init
       register_events
     end
