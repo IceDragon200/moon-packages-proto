@@ -30,13 +30,13 @@ module Lunar
     def initialize_button_events
       on :press do |e|
         if e.button == :mouse_left && screen_bounds.contains?(e.position)
-          trigger ButtonEvent.new(self, :button_press)
+          trigger { ButtonEvent.new(self, :button_press) }
         end
       end
 
       on :release do |e|
         if e.button == :mouse_left && screen_bounds.contains?(e.position)
-          trigger ButtonEvent.new(self, :button_release)
+          trigger { ButtonEvent.new(self, :button_release) }
         end
       end
     end

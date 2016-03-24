@@ -46,7 +46,7 @@ module Lunar
     def post_change_index
       @texts[@index].color = @selected_color
       super
-      trigger(MenuEvent.new(:index_changed, current_item, index))
+      trigger { MenuEvent.new(:index_changed, current_item, index) }
     end
 
     def add_item(symbol, title)
@@ -84,11 +84,11 @@ module Lunar
     end
 
     def cursor_accept
-      trigger(MenuEvent.new(:accept, current_item, index))
+      trigger { MenuEvent.new(:accept, current_item, index) }
     end
 
     def cursor_cancel
-      trigger(MenuEvent.new(:cancel, current_item, index))
+      trigger { MenuEvent.new(:cancel, current_item, index) }
     end
   end
 end
