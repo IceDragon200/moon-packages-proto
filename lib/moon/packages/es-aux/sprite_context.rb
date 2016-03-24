@@ -34,13 +34,9 @@ class SpriteContext < Moon::RenderContext
   # @param [Integer] x
   # @param [Integer] y
   # @param [Integer] z
-  # @param [Hash] options
-  def render_content(x, y, z, options)
+  def render_content(x, y, z)
     if @sprite
       o = @sprite.opacity
-      if n = options[:opacity]
-        @sprite.opacity = o * n
-      end
       @sprite.render(x, y, z)
       @sprite.opacity = o
     end
