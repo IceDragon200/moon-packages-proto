@@ -6,7 +6,6 @@ module States
     attr_reader :scheduler
     attr_reader :input_list
     attr_reader :render_list
-    attr_reader :tree
     attr_reader :update_list
 
     class CVar
@@ -56,10 +55,6 @@ module States
       @renderer.tag 'renderer'
       @gui = Moon::RenderContainer.new
       @gui.tag 'gui'
-      @tree = Moon::Tree.new
-
-      @tree.add @renderer
-      @tree.add @gui
 
       @input_list << @renderer
       @input_list << @gui
@@ -76,7 +71,6 @@ module States
     def terminate
       super
       @scheduler.clear
-      @tree.clear_children
       @input_list.clear
       @update_list.clear
       @render_list.clear
