@@ -74,6 +74,7 @@ module States
 
     def terminate
       super
+      puts "Terminating State: #{self}"
       @scheduler.clear
       @input_list.clear
       @update_list.clear
@@ -139,9 +140,19 @@ module States
       @render_list.each do |element|
         element.render
       end
-      super
     ensure
       GC.enable
+    end
+
+    # @param [Float] delta
+    def step(delta)
+      unless @started
+        start
+        @started = true
+      end
+      # game logic
+      update delta
+      render
     end
   end
 end
