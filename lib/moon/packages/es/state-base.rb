@@ -7,6 +7,7 @@ module States
     attr_reader :input_list
     attr_reader :render_list
     attr_reader :update_list
+    attr_reader :transition
 
     class CVar
       def initialize
@@ -55,6 +56,7 @@ module States
       @input_list = []
 
       @scheduler = Moon::Scheduler.new
+      @transition = TransitionScheduler.new
       @input = Moon::Input::Observer.new
       @input.on_exception = ->(exc, backtrace) { on_exception(exc, backtrace) }
 
@@ -63,6 +65,7 @@ module States
       @input_list << @renderer
       @input_list << @gui
       @update_list << @scheduler
+      @update_list << @transition
       @update_list << @renderer
       @update_list << @gui
       @render_list << @renderer
